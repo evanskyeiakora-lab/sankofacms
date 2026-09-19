@@ -1,0 +1,495 @@
+{% extends "public/base.html" %}
+
+{% block title %}
+    {{ gallery.title }} | Apex Citizens of Ghana
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ==========================================================
+     GALLERY DETAIL
+========================================================== -->
+
+<section class="gallery-detail-section py-5">
+
+    <div class="container">
+
+        <!-- ==================================================
+             MAIN GALLERY ITEM
+        =================================================== -->
+
+        <div class="row g-4 align-items-start">
+
+            <!-- ==================================================
+                 IMAGE
+            =================================================== -->
+
+            <div class="col-lg-8">
+
+                <div class="gallery-detail-image-wrapper">
+
+                    {% if gallery.image_url %}
+
+                        <img
+                            src="{{ url_for('static', filename=gallery.image_url) }}"
+                            alt="{{ gallery.title }}"
+                            class="img-fluid gallery-detail-image"
+                        >
+
+                    {% else %}
+
+                        <div class="gallery-no-image">
+                            <i class="fas fa-image"></i>
+                            <p>No image available</p>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 INFORMATION
+            =================================================== -->
+
+            <div class="col-lg-4">
+
+                <div class="gallery-detail-card">
+
+                    <!-- TITLE -->
+
+                    <h1 class="gallery-detail-title">
+                        {{ gallery.title }}
+                    </h1>
+
+
+                    <!-- CATEGORY -->
+
+                    {% if gallery.category %}
+
+                        <div class="gallery-detail-meta mb-3">
+
+                            <span class="text-muted d-block mb-1">
+                                Category
+                            </span>
+
+                            <span class="gallery-category">
+
+                                <i class="fas fa-folder"></i>
+
+                                {{ gallery.category }}
+
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- FEATURED -->
+
+                    {% if gallery.is_featured %}
+
+                        <div class="mb-3">
+
+                            <span class="badge bg-warning text-dark">
+
+                                <i class="fas fa-star me-1"></i>
+
+                                Featured
+
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- DESCRIPTION -->
+
+                    {% if gallery.description %}
+
+                        <div class="gallery-description mb-4">
+
+                            {{ gallery.description | safe }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- BACK TO GALLERY -->
+
+                    <a
+                        href="{{ url_for('main.gallery') }}"
+                        class="btn btn-success w-100 gallery-back-btn"
+                    >
+
+                        <i class="fas fa-images me-2"></i>
+
+                        Back to Gallery
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+     RELATED GALLERY
+========================================================== -->
+
+{% if related_images %}
+
+<section class="related-gallery-section py-5">
+
+    <div class="container">
+
+        <!-- SECTION HEADING -->
+
+        <div class="text-center mb-5">
+
+            <h2 class="related-gallery-title">
+                Related Gallery
+            </h2>
+
+            <p class="related-gallery-subtitle">
+                Explore more images from our gallery.
+            </p>
+
+        </div>
+
+
+        <!-- ==================================================
+             RELATED ITEMS
+        =================================================== -->
+
+        <div class="row g-4">
+
+            {% for related in related_images %}
+
+            <div class="col-md-6 col-lg-4">
+
+                <a
+                    href="{{ url_for(
+                        'main.gallery_detail',
+                        slug=related.slug
+                    ) }}"
+                    class="text-decoration-none"
+                >
+
+                    <div class="related-gallery-card">
+
+                        <!-- IMAGE -->
+
+                        {% if related.image_url %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=related.image_url
+                                ) }}"
+                                alt="{{ related.title }}"
+                                class="img-fluid related-gallery-image"
+                            >
+
+                        {% else %}
+
+                            <div class="related-no-image">
+
+                                <i class="fas fa-image"></i>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- CONTENT -->
+
+                        <div class="related-gallery-content">
+
+                            <h3>
+                                {{ related.title }}
+                            </h3>
+
+                            {% if related.category %}
+
+                                <span>
+                                    <i class="fas fa-folder me-1"></i>
+                                    {{ related.category }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- ==========================================================
+     PAGE-SPECIFIC CSS
+========================================================== -->
+
+<style>
+
+    /* ======================================================
+       MAIN SECTION
+    ====================================================== */
+
+    .gallery-detail-section {
+        background: #f7f9fb;
+    }
+
+
+    /* ======================================================
+       MAIN IMAGE
+    ====================================================== */
+
+    .gallery-detail-image-wrapper {
+        background: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .gallery-detail-image {
+        width: 100%;
+        max-height: 650px;
+        object-fit: cover;
+        display: block;
+    }
+
+
+    /* ======================================================
+       NO IMAGE
+    ====================================================== */
+
+    .gallery-no-image {
+        min-height: 450px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #eef2f5;
+        color: #7a8794;
+    }
+
+    .gallery-no-image i {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+
+
+    /* ======================================================
+       DETAIL CARD
+    ====================================================== */
+
+    .gallery-detail-card {
+        background: #ffffff;
+        padding: 28px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+
+    /* ======================================================
+       TITLE
+    ====================================================== */
+
+    .gallery-detail-title {
+        color: #243b55;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        line-height: 1.2;
+    }
+
+
+    /* ======================================================
+       CATEGORY
+    ====================================================== */
+
+    .gallery-category {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #243b55;
+        font-weight: 500;
+    }
+
+    .gallery-category i {
+        color: #0d6efd;
+    }
+
+
+    /* ======================================================
+       DESCRIPTION
+    ====================================================== */
+
+    .gallery-description {
+        color: #667085;
+        line-height: 1.7;
+        font-size: 15px;
+    }
+
+
+    /* ======================================================
+       BACK BUTTON
+    ====================================================== */
+
+    .gallery-back-btn {
+        padding: 14px 20px;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+
+    /* ======================================================
+       RELATED SECTION
+    ====================================================== */
+
+    .related-gallery-section {
+        background: #ffffff;
+    }
+
+
+    .related-gallery-title {
+        color: #243b55;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+
+    .related-gallery-subtitle {
+        color: #667085;
+        margin-bottom: 0;
+    }
+
+
+    /* ======================================================
+       RELATED CARD
+    ====================================================== */
+
+    .related-gallery-card {
+        background: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.25s ease,
+                    box-shadow 0.25s ease;
+    }
+
+
+    .related-gallery-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+
+    /* ======================================================
+       RELATED IMAGE
+    ====================================================== */
+
+    .related-gallery-image {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        display: block;
+    }
+
+
+    /* ======================================================
+       RELATED NO IMAGE
+    ====================================================== */
+
+    .related-no-image {
+        height: 230px;
+        background: #eef2f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8b98a5;
+        font-size: 45px;
+    }
+
+
+    /* ======================================================
+       RELATED CONTENT
+    ====================================================== */
+
+    .related-gallery-content {
+        padding: 18px;
+    }
+
+
+    .related-gallery-content h3 {
+        color: #243b55;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+
+    .related-gallery-content span {
+        color: #667085;
+        font-size: 14px;
+    }
+
+
+    .related-gallery-content span i {
+        color: #0d6efd;
+    }
+
+
+    /* ======================================================
+       MOBILE
+    ====================================================== */
+
+    @media (max-width: 767px) {
+
+        .gallery-detail-title {
+            font-size: 1.6rem;
+        }
+
+        .gallery-detail-card {
+            padding: 22px;
+        }
+
+        .gallery-detail-image {
+            max-height: 450px;
+        }
+
+        .related-gallery-image {
+            height: 220px;
+        }
+
+    }
+
+</style>
+
+{% endblock %}

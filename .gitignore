@@ -1,0 +1,38 @@
+﻿.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+.env
+.env.*
+!.env.example
+
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
+
+.vscode/
+.idea/
+
+*.log
+
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+
+*.backup
+*.backup1
+*.backup2
+
+# Project archives and temporary documentation
+*.zip
+*.7z
+*.rar
+
+# Local GitHub Pages custom domain configuration
+CNAME
+
+# Local backups
+*.backup
+*.backup1
+*.backup2

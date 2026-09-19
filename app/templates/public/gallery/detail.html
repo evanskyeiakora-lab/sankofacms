@@ -1,0 +1,163 @@
+
+{% extends "layouts/public.html" %}
+
+{% block title %}
+    {{ gallery_item.title }} | {{ settings.site_name if settings else "Apex Citizens of Ghana" }}
+{% endblock %}
+
+{% block meta_description %}
+    {{ gallery_item.description|striptags|truncate(155, True) if gallery_item.description else gallery_item.title }}
+{% endblock %}
+
+{% block meta_keywords %}
+    Apex Citizens of Ghana, gallery, {{ gallery_item.title }}
+{% endblock %}
+
+{% block canonical_url %}
+    {{ url_for("main.gallery_detail", slug=gallery_item.slug, _external=True) }}
+{% endblock %}
+
+{% block og_title %}
+    {{ gallery_item.title }}
+{% endblock %}
+
+{% block og_description %}
+    {{ gallery_item.description|striptags|truncate(155, True) if gallery_item.description else gallery_item.title }}
+{% endblock %}
+
+{% block og_type %}
+    article
+{% endblock %}
+
+{% block og_url %}
+    {{ url_for("main.gallery_detail", slug=gallery_item.slug, _external=True) }}
+{% endblock %}
+
+{% block og_image %}
+    {{ url_for("static", filename="uploads/gallery/" ~ gallery_item.image, _external=True) }}
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header py-5 bg-dark text-white">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-5 fw-bold">
+                {{ gallery_item.title }}
+            </h1>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('main.home') }}" class="text-white">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('main.gallery') }}" class="text-white">
+                            Gallery
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item active text-white" aria-current="page">
+                        {{ gallery_item.title }}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-10">
+
+                <article class="card border-0 shadow-sm overflow-hidden">
+
+                    {% if gallery_item.image %}
+                    <img
+                        src="{{ url_for('static', filename='uploads/gallery/' ~ gallery_item.image) }}"
+                        class="img-fluid w-100"
+                        alt="{{ gallery_item.title }}"
+                        loading="eager"
+                        style="max-height: 650px; object-fit: cover;"
+                    >
+                    {% endif %}
+
+                    <div class="card-body p-4 p-lg-5">
+
+                        <h2 class="fw-bold mb-3">
+                            {{ gallery_item.title }}
+                        </h2>
+
+                        {% if gallery_item.created_at %}
+                        <p class="text-muted mb-4">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            {{ gallery_item.created_at.strftime('%B %d, %Y') }}
+                        </p>
+                        {% endif %}
+
+                        {% if gallery_item.description %}
+                        <div class="gallery-description">
+                            {{ gallery_item.description|safe }}
+                        </div>
+                        {% endif %}
+
+                        <div class="mt-4">
+                            <a
+                                href="{{ url_for('main.gallery') }}"
+                                class="btn btn-primary"
+                            >
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Back to Gallery
+                            </a>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #212529, #6c757d);
+    }
+
+    .gallery-description {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: #555;
+    }
+
+    .gallery-description img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    "name": {{ gallery_item.title|tojson }},
+    "description": {{ (gallery_item.description|striptags|truncate(155, True) if gallery_item.description else gallery_item.title)|tojson }},
+    "contentUrl": {{ url_for("static", filename="uploads/gallery/" ~ gallery_item.image, _external=True)|tojson if gallery_item.image else "null" }},
+    "url": {{ url_for("main.gallery_detail", slug=gallery_item.slug, _external=True)|tojson }}
+}
+</script>
+{% endblock %}

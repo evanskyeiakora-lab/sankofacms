@@ -1,0 +1,18 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+Create Gallery Image
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    {% set form_title = "Add Gallery Image" %}
+    {% set gallery = None %}
+
+    {% include "admin/gallery/_form.html" %}
+
+</div>
+
+{% endblock %}

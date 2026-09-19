@@ -1,0 +1,361 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+Edit Page
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ==========================================
+         PAGE HEADER
+         ========================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Edit Page
+            </h2>
+
+            <p class="text-muted mb-0">
+                Update website page content and settings.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('pages.index') }}"
+            class="btn btn-outline-secondary"
+        >
+
+            <i class="bi bi-arrow-left me-1"></i>
+
+            Back to Pages
+
+        </a>
+
+    </div>
+
+
+    <!-- ==========================================
+         FORM
+         ========================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+
+            <strong>
+                Page Information
+            </strong>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {{ form.hidden_tag() }}
+
+
+                <!-- ==================================
+                     TITLE
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.title.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.title(
+                        class="form-control"
+                    ) }}
+
+                    {% for error in form.title.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     SLUG
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.slug.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.slug(
+                        class="form-control"
+                    ) }}
+
+                    <div class="form-text">
+
+                        Changing the slug will change the
+                        page's public URL.
+
+                    </div>
+
+                    {% for error in form.slug.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     PAGE ROLE
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.page_role.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.page_role(
+                        class="form-select"
+                    ) }}
+
+                    <div class="form-text">
+
+                        Special homepage roles can only be
+                        assigned to one page at a time.
+
+                    </div>
+
+                    {% for error in form.page_role.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     CONTENT
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.content.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.content(
+                        class="form-control",
+                        rows="14"
+                    ) }}
+
+                    {% for error in form.content.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     CURRENT IMAGE
+                     ================================== -->
+
+                {% if page.featured_image %}
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+                        Current Featured Image
+                    </label>
+
+                    <div>
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/pages/' ~ page.featured_image
+                            ) }}"
+                            alt="{{ page.title }}"
+                            class="img-thumbnail"
+                            style="
+                                max-width: 320px;
+                                max-height: 220px;
+                                object-fit: cover;
+                            "
+                        >
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- ==================================
+                     NEW IMAGE
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.featured_image.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.featured_image(
+                        class="form-control"
+                    ) }}
+
+                    <div class="form-text">
+
+                        Leave empty to keep the current image.
+                        Uploading a new image will replace the
+                        existing image.
+
+                    </div>
+
+                    {% for error in form.featured_image.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     SEO
+                     ================================== -->
+
+                <div class="card bg-light border-0 mb-4">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold mb-3">
+
+                            <i class="bi bi-search me-2"></i>
+
+                            SEO Settings
+
+                        </h5>
+
+
+                        <div class="mb-3">
+
+                            {{ form.meta_title.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+                            {{ form.meta_title(
+                                class="form-control"
+                            ) }}
+
+                            {% for error in form.meta_title.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div>
+
+                            {{ form.meta_description.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+                            {{ form.meta_description(
+                                class="form-control",
+                                rows="4"
+                            ) }}
+
+                            {% for error in form.meta_description.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     PUBLISH
+                     ================================== -->
+
+                <div class="form-check mb-4">
+
+                    {{ form.is_published(
+                        class="form-check-input"
+                    ) }}
+
+                    {{ form.is_published.label(
+                        class="form-check-label fw-semibold"
+                    ) }}
+
+                </div>
+
+
+                <!-- ==================================
+                     ACTIONS
+                     ================================== -->
+
+                <div class="d-flex gap-2">
+
+                    {{ form.submit(
+                        class="btn btn-primary px-4"
+                    ) }}
+
+                    <a
+                        href="{{ url_for('pages.index') }}"
+                        class="btn btn-outline-secondary"
+                    >
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

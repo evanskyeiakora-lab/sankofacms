@@ -1,0 +1,151 @@
+<!-- ==========================================
+     UPCOMING EVENTS
+========================================== -->
+
+<section class="events-section py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5" data-aos="fade-up">
+
+            <span class="text-warning fw-bold text-uppercase">
+
+                Upcoming Events
+
+            </span>
+
+            <h2 class="display-5 fw-bold mt-2">
+
+                Join Our Upcoming Activities
+
+            </h2>
+
+            <p class="text-muted">
+
+                Stay connected by participating in our upcoming programmes,
+                conferences, outreach events and community initiatives.
+
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            {% for event in upcoming_events %}
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up">
+
+                <div class="card event-card h-100">
+
+                    {% if event.featured_image %}
+
+                    <img src="{{ url_for('static',
+                        filename='uploads/events/' ~ event.featured_image) }}"
+                        class="card-img-top"
+                        alt="{{ event.title }}">
+
+                    {% else %}
+
+                    <img src="{{ url_for('static',
+                        filename='images/event-placeholder.jpg') }}"
+                        class="card-img-top"
+                        alt="Event">
+
+                    {% endif %}
+
+                    <div class="card-body">
+
+                        <span class="badge bg-success mb-3">
+
+                            {{ event.start_date.strftime("%d %b %Y") }}
+
+                        </span>
+
+                        <h5 class="card-title">
+
+                            {{ event.title }}
+
+                        </h5>
+
+                        <p class="card-text">
+
+                            {{ event.description|striptags|truncate(120) }}
+
+                        </p>
+
+                        {% if event.venue %}
+
+                        <p class="small text-muted mb-1">
+
+                            <i class="fas fa-map-marker-alt"></i>
+
+                            {{ event.venue }}
+
+                        </p>
+
+                        {% endif %}
+
+                        {% if event.start_time %}
+
+                        <p class="small text-muted">
+
+                            <i class="fas fa-clock"></i>
+
+                            {{ event.start_time.strftime("%I:%M %p") }}
+
+                        </p>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="card-footer bg-white border-0">
+
+                        <a href="{{ url_for('main.event_detail',
+                            slug=event.slug) }}"
+                           class="btn btn-primary">
+
+                            View Details
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="col-12 text-center">
+
+                <p class="lead">
+
+                    No upcoming events available.
+
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% if upcoming_events %}
+
+        <div class="text-center mt-5">
+
+            <a href="{{ url_for('main.events') }}"
+               class="btn btn-outline-primary btn-lg">
+
+                View All Events
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>

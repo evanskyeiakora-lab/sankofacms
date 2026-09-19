@@ -1,0 +1,871 @@
+<!-- =========================================================
+     LEADERSHIP SECTION
+========================================================= -->
+
+<section id="leadership" class="leaders-section">
+
+    <div class="container">
+
+        <!-- =================================================
+             SECTION HEADER
+        ================================================== -->
+
+        <div class="leaders-heading" data-aos="fade-up">
+
+            <div class="leaders-eyebrow">
+                OUR LEADERSHIP
+            </div>
+
+            <h2>
+                Meet Our
+                <span>Leadership Team</span>
+            </h2>
+
+            <p>
+                Meet the dedicated leaders working together
+                to advance the vision, values and development
+                of Apex Citizens of Ghana.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             LEADERS
+        ================================================== -->
+
+        {% if leaders %}
+
+        <div class="row g-4 justify-content-center">
+
+            {% for leader in leaders %}
+
+            <div
+                class="col-sm-6 col-lg-4"
+                data-aos="fade-up"
+                data-aos-delay="{{ loop.index0 * 100 }}"
+            >
+
+                <article class="leader-card">
+
+                    <!-- =====================================
+                         PHOTO
+                    ====================================== -->
+
+                    <div class="leader-photo-wrapper">
+
+                        {% if leader.photo %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/leaders/' ~ leader.photo
+                            ) }}"
+                            alt="{{ leader.name }}"
+                            class="leader-photo"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+
+                        <div
+                            class="leader-photo-placeholder"
+                            style="display:none;"
+                        >
+                            <i class="fas fa-user"></i>
+                        </div>
+
+                        {% else %}
+
+                        <div class="leader-photo-placeholder">
+
+                            <i class="fas fa-user"></i>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- PHOTO OVERLAY -->
+
+                        <div class="leader-photo-overlay">
+
+                            <div class="leader-social">
+
+                                {% if leader.facebook %}
+
+                                <a
+                                    href="{{ leader.facebook }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Facebook"
+                                >
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+
+                                {% endif %}
+
+
+                                {% if leader.twitter %}
+
+                                <a
+                                    href="{{ leader.twitter }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Twitter"
+                                >
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+
+                                {% endif %}
+
+
+                                {% if leader.linkedin %}
+
+                                <a
+                                    href="{{ leader.linkedin }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="LinkedIn"
+                                >
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         LEADER INFORMATION
+                    ====================================== -->
+
+                    <div class="leader-content">
+
+                        <div class="leader-position">
+                            {{ leader.position }}
+                        </div>
+
+                        <h3 class="leader-name">
+                            {{ leader.name }}
+                        </h3>
+
+
+                        {% if leader.bio %}
+
+                        <p class="leader-bio">
+
+                            {{ leader.bio[:140] }}
+
+                            {% if leader.bio|length > 140 %}
+                                ...
+                            {% endif %}
+
+                        </p>
+
+                        {% else %}
+
+                        <p class="leader-bio">
+
+                            Dedicated to serving the community
+                            and advancing the mission of
+                            Apex Citizens of Ghana.
+
+                        </p>
+
+                        {% endif %}
+
+
+                        <!-- CONTACT -->
+
+                        {% if leader.email or leader.phone %}
+
+                        <div class="leader-contact">
+
+                            {% if leader.email %}
+
+                            <a
+                                href="mailto:{{ leader.email }}"
+                                aria-label="Email {{ leader.name }}"
+                                title="Email"
+                            >
+                                <i class="fas fa-envelope"></i>
+                            </a>
+
+                            {% endif %}
+
+
+                            {% if leader.phone %}
+
+                            <a
+                                href="tel:{{ leader.phone }}"
+                                aria-label="Call {{ leader.name }}"
+                                title="Call"
+                            >
+                                <i class="fas fa-phone"></i>
+                            </a>
+
+                            {% endif %}
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- =================================================
+             VIEW FULL TEAM
+        ================================================== -->
+
+        <div
+            class="leaders-action"
+            data-aos="fade-up"
+        >
+
+            <a
+                href="{{ url_for('main.leadership') }}"
+                class="leaders-btn"
+            >
+
+                Meet Our Full Team
+
+                <i class="fas fa-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
+        <div
+            class="leaders-empty"
+            data-aos="fade-up"
+        >
+
+            <div class="leaders-empty-icon">
+
+                <i class="fas fa-users"></i>
+
+            </div>
+
+            <h3>
+                Our Leadership Team
+            </h3>
+
+            <p>
+                Leadership information will be available soon.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     LEADERSHIP CSS
+========================================================= -->
+
+<style>
+
+.leaders-section {
+
+    position: relative;
+
+    padding: 95px 0;
+
+    background: #f7f9fb;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.leaders-heading {
+
+    max-width: 780px;
+
+    margin: 0 auto 55px;
+
+    text-align: center;
+
+}
+
+.leaders-eyebrow {
+
+    margin-bottom: 14px;
+
+    color: #198754;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+.leaders-heading h2 {
+
+    margin: 0 0 18px;
+
+    color: #263b52;
+
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+}
+
+.leaders-heading h2 span {
+
+    color: #198754;
+
+}
+
+.leaders-heading p {
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    color: #667085;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.leader-card {
+
+    height: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e6ebe8;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+.leader-card:hover {
+
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.11);
+
+}
+
+
+/* =========================================================
+   PHOTO
+========================================================= */
+
+.leader-photo-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 340px;
+
+    overflow: hidden;
+
+    background: #eef3f0;
+
+}
+
+.leader-photo {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    transition: transform 0.5s ease;
+
+}
+
+.leader-card:hover .leader-photo {
+
+    transform: scale(1.04);
+
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.leader-photo-placeholder {
+
+    width: 100%;
+
+    height: 100%;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eaf6ef,
+            #dcefe5
+        );
+
+    color: #198754;
+
+}
+
+.leader-photo-placeholder i {
+
+    font-size: 75px;
+
+    opacity: 0.7;
+
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.leader-photo-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    padding-bottom: 22px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0)
+        );
+
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+
+}
+
+.leader-card:hover .leader-photo-overlay {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   SOCIAL
+========================================================= */
+
+.leader-social {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+}
+
+.leader-social a {
+
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #ffffff;
+
+    color: #198754;
+
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+
+}
+
+.leader-social a:hover {
+
+    background: #198754;
+
+    color: #ffffff;
+
+    transform: translateY(-3px);
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.leader-content {
+
+    padding: 25px 25px 27px;
+
+    text-align: center;
+
+}
+
+.leader-position {
+
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: #198754;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+.leader-name {
+
+    margin: 0 0 12px;
+
+    color: #263b52;
+
+    font-size: 22px;
+
+    font-weight: 750;
+
+}
+
+.leader-bio {
+
+    min-height: 65px;
+
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.leader-contact {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #edf1ef;
+
+}
+
+.leader-contact a {
+
+    width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eaf6ef;
+
+    color: #198754;
+
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+
+}
+
+.leader-contact a:hover {
+
+    background: #198754;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.leaders-action {
+
+    margin-top: 50px;
+
+    text-align: center;
+
+}
+
+.leaders-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 13px 25px;
+
+    background: #198754;
+
+    color: #ffffff;
+
+    border: 2px solid #198754;
+
+    border-radius: 7px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+
+}
+
+.leaders-btn:hover {
+
+    background: #146c43;
+
+    border-color: #146c43;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(25, 135, 84, 0.2);
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.leaders-empty {
+
+    padding: 60px 20px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ebe7;
+
+    border-radius: 15px;
+
+}
+
+.leaders-empty-icon {
+
+    width: 75px;
+
+    height: 75px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eaf6ef;
+
+    color: #198754;
+
+    border-radius: 50%;
+
+    font-size: 28px;
+
+}
+
+.leaders-empty h3 {
+
+    margin-bottom: 8px;
+
+    color: #263b52;
+
+    font-weight: 700;
+
+}
+
+.leaders-empty p {
+
+    margin: 0;
+
+    color: #718096;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .leaders-section {
+
+        padding: 75px 0;
+
+    }
+
+    .leader-photo-wrapper {
+
+        height: 300px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .leaders-section {
+
+        padding: 60px 0;
+
+    }
+
+    .leaders-heading {
+
+        margin-bottom: 40px;
+
+    }
+
+    .leaders-heading p {
+
+        font-size: 16px;
+
+    }
+
+    .leader-photo-wrapper {
+
+        height: 350px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .leader-photo-wrapper {
+
+        height: 320px;
+
+    }
+
+    .leader-content {
+
+        padding: 22px 18px 24px;
+
+    }
+
+    .leader-name {
+
+        font-size: 20px;
+
+    }
+
+}
+
+</style>

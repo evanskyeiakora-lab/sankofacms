@@ -1,0 +1,899 @@
+<!-- =========================================================
+     ABOUT US SECTION
+========================================================= -->
+
+<section
+    id="about"
+    class="about-section"
+>
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+
+            <!-- =================================================
+                 LEFT COLUMN — IMAGE
+            ================================================== -->
+
+            <div
+                class="col-lg-6"
+                data-aos="fade-right"
+            >
+
+                <div class="about-image-wrapper">
+
+                    {% if about_page and about_page.featured_image %}
+
+    <img
+        src="{{ url_for(
+            'static',
+            filename='uploads/pages/' ~ about_page.featured_image
+        ) }}"
+        alt="{{ about_page.title }}"
+        class="about-image"
+    >
+
+{% else %}
+
+    <div class="about-image-placeholder">
+
+        <i class="fas fa-image"></i>
+
+        <p>
+            No About Us image available
+        </p>
+
+    </div>
+
+{% endif %}
+
+
+                    <!-- Decorative Border -->
+
+                    <div class="about-image-border"></div>
+
+
+                    <!-- Community Badge -->
+
+                    <div class="about-image-badge">
+
+                        <div class="badge-icon">
+
+                            <i class="fas fa-users"></i>
+
+                        </div>
+
+                        <div class="badge-content">
+
+                            <strong>
+                                Our Community
+                            </strong>
+
+                            <small>
+                                Working Together
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT COLUMN — CONTENT
+            ================================================== -->
+
+            <div
+                class="col-lg-6"
+                data-aos="fade-left"
+            >
+
+                <!-- Section Label -->
+
+                <div class="about-label">
+
+                    ABOUT US
+
+                </div>
+
+
+                <!-- Main Heading -->
+
+                <h2 class="about-title">
+
+    {% if about_page %}
+
+        {{ about_page.title }}
+
+    {% else %}
+
+        Welcome to
+
+        <span>
+            Apex Citizens of Ghana
+        </span>
+
+    {% endif %}
+
+</h2>
+
+
+                <!-- Introduction -->
+
+                <p class="about-text">
+
+                    Apex Citizens of Ghana is committed to building
+                    stronger communities through responsible leadership,
+                    unity, development and active citizenship.
+
+                </p>
+
+
+                <p class="about-text">
+
+                    We believe that meaningful national development
+                    begins when citizens come together, take responsibility
+                    and work towards a better future for everyone.
+
+                </p>
+
+
+                <!-- =================================================
+                     CORE VALUES
+                ================================================== -->
+
+                <div class="about-values">
+
+
+                    <!-- COMMUNITY -->
+
+                    <div class="value-item">
+
+                        <div class="value-icon">
+
+                            <i class="fas fa-users"></i>
+
+                        </div>
+
+                        <div class="value-content">
+
+                            <h5>
+                                Community
+                            </h5>
+
+                            <p>
+                                Building stronger and more
+                                connected communities.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- UNITY -->
+
+                    <div class="value-item">
+
+                        <div class="value-icon">
+
+                            <i class="fas fa-handshake"></i>
+
+                        </div>
+
+                        <div class="value-content">
+
+                            <h5>
+                                Unity
+                            </h5>
+
+                            <p>
+                                Bringing citizens together
+                                for a common purpose.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LEADERSHIP -->
+
+                    <div class="value-item">
+
+                        <div class="value-icon">
+
+                            <i class="fas fa-user-tie"></i>
+
+                        </div>
+
+                        <div class="value-content">
+
+                            <h5>
+                                Leadership
+                            </h5>
+
+                            <p>
+                                Encouraging responsible and
+                                accountable leadership.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DEVELOPMENT -->
+
+                    <div class="value-item">
+
+                        <div class="value-icon">
+
+                            <i class="fas fa-chart-line"></i>
+
+                        </div>
+
+                        <div class="value-content">
+
+                            <h5>
+                                Development
+                            </h5>
+
+                            <p>
+                                Supporting positive and sustainable
+                                national development.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     BUTTON
+                ================================================== -->
+
+                <div class="about-action">
+
+                    <a
+                        href="{{ url_for('main.home') }}#about"
+                        class="about-btn"
+                    >
+
+                        Learn More
+
+                        <i class="fas fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT US CSS
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.about-section {
+
+    position: relative;
+
+    padding: 90px 0;
+
+    background: #ffffff;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   IMAGE WRAPPER
+========================================================= */
+
+.about-image-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    padding-right: 24px;
+
+    padding-bottom: 24px;
+
+}
+
+
+/* =========================================================
+   MAIN IMAGE
+========================================================= */
+
+.about-image {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: block;
+
+    width: 100%;
+
+    height: 520px;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.12);
+
+}
+
+
+/* =========================================================
+   IMAGE PLACEHOLDER
+========================================================= */
+
+.about-image-placeholder {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    height: 520px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f4f7f5;
+
+    color: #6c757d;
+
+    border: 1px solid #e3e8e5;
+
+    border-radius: 16px;
+
+}
+
+
+.about-image-placeholder i {
+
+    font-size: 55px;
+
+    margin-bottom: 15px;
+
+    color: #198754;
+
+}
+
+
+.about-image-placeholder p {
+
+    margin: 0;
+
+    font-size: 15px;
+
+}
+
+
+/* =========================================================
+   DECORATIVE BORDER
+========================================================= */
+
+.about-image-border {
+
+    position: absolute;
+
+    z-index: 1;
+
+    right: 0;
+
+    bottom: 0;
+
+    width: 82%;
+
+    height: 82%;
+
+    border: 6px solid #fdbb00;
+
+    border-radius: 16px;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   COMMUNITY BADGE
+========================================================= */
+
+.about-image-badge {
+
+    position: absolute;
+
+    z-index: 4;
+
+    left: 0;
+
+    bottom: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 22px;
+
+    background: #198754;
+
+    color: #ffffff;
+
+    border-radius: 0 14px 0 0;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15);
+
+}
+
+
+.badge-icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    border-radius: 50%;
+
+    font-size: 18px;
+
+}
+
+
+.badge-content strong {
+
+    display: block;
+
+    font-size: 15px;
+
+    line-height: 1.3;
+
+}
+
+
+.badge-content small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    opacity: 0.85;
+
+}
+
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
+
+.about-label {
+
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    color: #198754;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.about-title {
+
+    margin: 0 0 25px;
+
+    color: #263b52;
+
+    font-size: 48px;
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+}
+
+
+.about-title span {
+
+    display: block;
+
+    color: #198754;
+
+}
+
+
+/* =========================================================
+   PARAGRAPHS
+========================================================= */
+
+.about-text {
+
+    margin-bottom: 18px;
+
+    color: #667085;
+
+    font-size: 17px;
+
+    line-height: 1.85;
+
+}
+
+
+/* =========================================================
+   VALUES GRID
+========================================================= */
+
+.about-values {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 22px;
+
+    margin-top: 30px;
+
+}
+
+
+/* =========================================================
+   VALUE ITEM
+========================================================= */
+
+.value-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+}
+
+
+/* =========================================================
+   VALUE ICON
+========================================================= */
+
+.value-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eaf6ef;
+
+    color: #198754;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+}
+
+
+/* =========================================================
+   VALUE CONTENT
+========================================================= */
+
+.value-content h5 {
+
+    margin: 0 0 5px;
+
+    color: #263b52;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+}
+
+
+.value-content p {
+
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   BUTTON AREA
+========================================================= */
+
+.about-action {
+
+    margin-top: 32px;
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.about-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 13px 25px;
+
+    background: #198754;
+
+    color: #ffffff;
+
+    border: 2px solid #198754;
+
+    border-radius: 7px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        all 0.3s ease;
+
+}
+
+
+.about-btn:hover {
+
+    background: #146c43;
+
+    border-color: #146c43;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(25, 135, 84, 0.2);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .about-section {
+
+        padding: 70px 0;
+
+    }
+
+
+    .about-title {
+
+        font-size: 40px;
+
+    }
+
+
+    .about-image {
+
+        height: 450px;
+
+    }
+
+
+    .about-image-placeholder {
+
+        height: 450px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .about-section {
+
+        padding: 55px 0;
+
+    }
+
+
+    .about-image-wrapper {
+
+        padding-right: 12px;
+
+        padding-bottom: 18px;
+
+    }
+
+
+    .about-image {
+
+        height: 380px;
+
+    }
+
+
+    .about-image-placeholder {
+
+        height: 380px;
+
+    }
+
+
+    .about-image-border {
+
+        width: 78%;
+
+        height: 78%;
+
+        border-width: 5px;
+
+    }
+
+
+    .about-image-badge {
+
+        padding: 11px 16px;
+
+    }
+
+
+    .badge-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 16px;
+
+    }
+
+
+    .about-title {
+
+        font-size: 35px;
+
+    }
+
+
+    .about-text {
+
+        font-size: 16px;
+
+        line-height: 1.8;
+
+    }
+
+
+    .about-values {
+
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .about-image {
+
+        height: 320px;
+
+    }
+
+
+    .about-image-placeholder {
+
+        height: 320px;
+
+    }
+
+
+    .about-title {
+
+        font-size: 30px;
+
+    }
+
+
+    .about-image-badge {
+
+        padding: 10px 13px;
+
+    }
+
+
+    .badge-content strong {
+
+        font-size: 14px;
+
+    }
+
+}
+
+</style>

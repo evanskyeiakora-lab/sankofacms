@@ -1,0 +1,806 @@
+{% extends "layouts/admin.html" %}
+
+
+{% block title %}
+    Dashboard | Apex CMS
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ==========================================================
+     DASHBOARD ACTION
+========================================================== -->
+
+<div class="d-flex justify-content-end mb-4">
+
+    <a
+        href="{{ url_for('news.create') }}"
+        class="btn btn-primary">
+
+        <i class="fas fa-plus me-2"></i>
+
+        New News
+
+    </a>
+
+</div>
+
+
+
+<!-- ==========================================================
+     STATISTICS
+========================================================== -->
+
+<div class="row g-4">
+
+
+    <!-- NEWS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            News
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.news }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-newspaper dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- HERO SLIDES -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            Hero Slides
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.hero }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-images dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- EVENTS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            Events
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.events }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-calendar-days dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PAGES -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            Pages
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.pages }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-file-lines dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- GALLERY -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            Gallery
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.gallery }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-photo-film dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- MEMBERS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            Members
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.members }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-users dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- USERS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            Users
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.users }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-user-shield dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- MESSAGES -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="text-muted mb-2">
+                            Messages
+                        </h6>
+
+                        <h2 class="mb-0 fw-bold">
+                            {{ stats.messages }}
+                        </h2>
+
+                    </div>
+
+                    <i class="fas fa-envelope dashboard-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==========================================================
+     NEWS STATUS
+========================================================== -->
+
+<div class="row g-4 mt-1">
+
+
+    <!-- Published -->
+
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="dashboard-small-icon text-success">
+
+                        <i class="fas fa-circle-check"></i>
+
+                    </div>
+
+                    <div class="ms-3">
+
+                        <h6 class="text-muted mb-1">
+                            Published News
+                        </h6>
+
+                        <h3 class="mb-0 fw-bold">
+                            {{ stats.published_news }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Draft -->
+
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="dashboard-small-icon text-warning">
+
+                        <i class="fas fa-file-pen"></i>
+
+                    </div>
+
+                    <div class="ms-3">
+
+                        <h6 class="text-muted mb-1">
+                            Draft News
+                        </h6>
+
+                        <h3 class="mb-0 fw-bold">
+                            {{ stats.draft_news }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==========================================================
+     QUICK ACTIONS
+========================================================== -->
+
+<div class="card mt-4">
+
+    <div class="card-header">
+
+        <strong>
+            Quick Actions
+        </strong>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="d-flex flex-wrap gap-2">
+
+
+            <!-- Hero -->
+
+            <a
+                href="{{ url_for('hero.create') }}"
+                class="btn btn-outline-primary">
+
+                <i class="fas fa-images me-1"></i>
+
+                Hero Slide
+
+            </a>
+
+
+            <!-- News -->
+
+            <a
+                href="{{ url_for('news.create') }}"
+                class="btn btn-outline-success">
+
+                <i class="fas fa-newspaper me-1"></i>
+
+                News
+
+            </a>
+
+
+            <!-- Event -->
+
+            <a
+                href="{{ url_for('events.create') }}"
+                class="btn btn-outline-warning">
+
+                <i class="fas fa-calendar-days me-1"></i>
+
+                Event
+
+            </a>
+
+
+            <!-- Gallery -->
+
+            <a
+                href="{{ url_for('gallery.create') }}"
+                class="btn btn-outline-info">
+
+                <i class="fas fa-images me-1"></i>
+
+                Gallery
+
+            </a>
+
+
+            <!-- Member -->
+
+            <a
+                href="{{ url_for('members.create') }}"
+                class="btn btn-outline-dark">
+
+                <i class="fas fa-user-plus me-1"></i>
+
+                Member
+
+            </a>
+
+
+            <!-- Page -->
+
+            <a
+                href="{{ url_for('pages.create') }}"
+                class="btn btn-outline-secondary">
+
+                <i class="fas fa-file-circle-plus me-1"></i>
+
+                Page
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==========================================================
+     RECENT NEWS
+========================================================== -->
+
+<div class="card mt-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <strong>
+            Recent News
+        </strong>
+
+        <a
+            href="{{ url_for('news.index') }}"
+            class="btn btn-sm btn-outline-primary">
+
+            View All
+
+        </a>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        {% if recent_news %}
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover mb-0">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for item in recent_news %}
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+                                    {{ item.title }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                {% if item.status == "published" %}
+
+                                    <span class="badge bg-success">
+                                        Published
+                                    </span>
+
+                                {% elif item.status == "draft" %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        Draft
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        {{ item.status }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-state">
+
+                <i class="fas fa-newspaper"></i>
+
+                <h5>
+                    No news available
+                </h5>
+
+                <p>
+                    Create your first news article to see it here.
+                </p>
+
+                <a
+                    href="{{ url_for('news.create') }}"
+                    class="btn btn-primary">
+
+                    <i class="fas fa-plus me-1"></i>
+
+                    Create News
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ==========================================================
+     RECENT EVENTS
+========================================================== -->
+
+<div class="card mt-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <strong>
+            Recent Events
+        </strong>
+
+        <a
+            href="{{ url_for('events.index') }}"
+            class="btn btn-sm btn-outline-primary">
+
+            View All
+
+        </a>
+
+    </div>
+
+
+    <div class="card-body">
+
+        {% if recent_events %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover mb-0">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Event
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Venue
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for event in recent_events %}
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+                                    {{ event.title }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                {% if event.start_date %}
+
+                                    {{ event.start_date.strftime('%d %b %Y') }}
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        No date
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if event.venue %}
+
+                                    {{ event.venue }}
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        Not specified
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if event.is_published %}
+
+                                    <span class="badge bg-success">
+                                        Published
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        Draft
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <i class="fas fa-calendar-days"></i>
+
+                <h5>
+                    No events available
+                </h5>
+
+                <p>
+                    Create your first event to see it here.
+                </p>
+
+                <a
+                    href="{{ url_for('events.create') }}"
+                    class="btn btn-primary">
+
+                    <i class="fas fa-plus me-1"></i>
+
+                    Create Event
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% endblock %}

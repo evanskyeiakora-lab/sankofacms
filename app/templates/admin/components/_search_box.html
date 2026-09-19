@@ -1,0 +1,22 @@
+<form method="GET">
+
+    <div class="input-group mb-4">
+
+        <input
+            type="text"
+            class="form-control"
+            name="search"
+            value="{{ request.args.get('search', '') }}"
+            placeholder="Search...">
+
+        <button
+            class="btn btn-outline-secondary"
+            type="submit">
+
+            Search
+
+        </button>
+
+    </div>
+
+</form>

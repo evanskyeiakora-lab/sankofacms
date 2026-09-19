@@ -1,0 +1,824 @@
+<!-- =========================================================
+     HOME HERO SLIDER
+========================================================= -->
+
+<section class="home-hero">
+
+    {% if slides %}
+
+    <div
+        id="homeHeroCarousel"
+        class="carousel slide carousel-fade home-hero-carousel"
+        data-bs-ride="carousel"
+        data-bs-interval="6000"
+    >
+
+        <!-- =================================================
+             INDICATORS
+        ================================================== -->
+
+        {% if slides|length > 1 %}
+
+        <div class="carousel-indicators">
+
+            {% for slide in slides %}
+
+            <button
+                type="button"
+                data-bs-target="#homeHeroCarousel"
+                data-bs-slide-to="{{ loop.index0 }}"
+                class="{% if loop.first %}active{% endif %}"
+                aria-current="{% if loop.first %}true{% endif %}"
+                aria-label="Slide {{ loop.index }}"
+            ></button>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             SLIDES
+        ================================================== -->
+
+        <div class="carousel-inner">
+
+            {% for slide in slides %}
+
+            <div
+                class="carousel-item home-hero-item {% if loop.first %}active{% endif %}"
+            >
+
+                <!-- =================================================
+                     HERO IMAGE
+                ================================================== -->
+
+                {% if slide.image %}
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='uploads/hero/' ~ slide.image
+                    ) }}"
+                    class="home-hero-image"
+                    alt="{{ slide.title or 'Apex Citizens of Ghana' }}"
+                >
+
+                {% else %}
+
+                <div class="home-hero-image home-hero-placeholder"></div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     DARK OVERLAY
+                ================================================== -->
+
+                <div class="home-hero-overlay"></div>
+
+
+                <!-- =================================================
+                     HERO CONTENT
+                ================================================== -->
+
+                <div class="home-hero-caption">
+
+                    <div class="container">
+
+                        <div class="home-hero-content">
+
+                            {% if slide.title %}
+
+                            <h1 class="home-hero-title">
+
+                                {{ slide.title }}
+
+                            </h1>
+
+                            {% endif %}
+
+
+                            {% if slide.subtitle %}
+
+                            <p class="home-hero-subtitle">
+
+                                {{ slide.subtitle }}
+
+                            </p>
+
+                            {% endif %}
+
+
+                            {% if slide.button_text and slide.button_url %}
+
+                            <div class="home-hero-buttons">
+
+                                <a
+                                    href="{{ slide.button_url }}"
+                                    class="btn btn-warning btn-lg"
+                                >
+
+                                    {{ slide.button_text }}
+
+                                    <i class="fas fa-arrow-right ms-2"></i>
+
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- =================================================
+             PREVIOUS BUTTON
+        ================================================== -->
+
+        {% if slides|length > 1 %}
+
+        <button
+            class="carousel-control-prev home-hero-control"
+            type="button"
+            data-bs-target="#homeHeroCarousel"
+            data-bs-slide="prev"
+        >
+
+            <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+            ></span>
+
+            <span class="visually-hidden">
+                Previous
+            </span>
+
+        </button>
+
+
+        <!-- =================================================
+             NEXT BUTTON
+        ================================================== -->
+
+        <button
+            class="carousel-control-next home-hero-control"
+            type="button"
+            data-bs-target="#homeHeroCarousel"
+            data-bs-slide="next"
+        >
+
+            <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+            ></span>
+
+            <span class="visually-hidden">
+                Next
+            </span>
+
+        </button>
+
+        {% endif %}
+
+    </div>
+
+
+    {% else %}
+
+    <!-- =====================================================
+         FALLBACK HERO
+    ====================================================== -->
+
+    <div class="home-hero-fallback">
+
+        <div class="container">
+
+            <div class="home-hero-fallback-content">
+
+                <span class="badge bg-warning text-dark mb-3 px-3 py-2">
+
+                    Apex Citizens of Ghana
+
+                </span>
+
+
+                <h1>
+
+                    Together We Can Build
+
+                    <span>
+                        A Better Ghana
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    Building stronger communities through
+                    responsible leadership, unity, development
+                    and active citizenship.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('main.join_us') }}"
+                    class="btn btn-warning btn-lg px-4"
+                >
+
+                    Join Us
+
+                    <i class="fas fa-arrow-right ms-2"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- =========================================================
+     HERO STYLES
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   MAIN HERO
+========================================================= */
+
+.home-hero {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 620px;
+
+    min-height: 620px;
+
+    overflow: hidden;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+/* =========================================================
+   CAROUSEL
+========================================================= */
+
+.home-hero-carousel {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 620px;
+
+    min-height: 620px;
+
+}
+
+
+/* =========================================================
+   CAROUSEL INNER
+========================================================= */
+
+.home-hero-carousel .carousel-inner {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 620px;
+
+    min-height: 620px;
+
+}
+
+
+/* =========================================================
+   CAROUSEL ITEM
+
+   IMPORTANT:
+   Bootstrap normally allows carousel items to determine
+   their own height. We explicitly set the height here.
+========================================================= */
+
+.home-hero-item {
+
+    position: relative !important;
+
+    width: 100%;
+
+    height: 620px !important;
+
+    min-height: 620px !important;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   HERO IMAGE
+========================================================= */
+
+.home-hero-image {
+
+    position: absolute !important;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100% !important;
+
+    height: 620px !important;
+
+    min-height: 620px !important;
+
+    object-fit: cover;
+
+    object-position: center center;
+
+    display: block !important;
+
+    z-index: 1;
+
+}
+
+
+/* =========================================================
+   IMAGE PLACEHOLDER
+========================================================= */
+
+.home-hero-placeholder {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0d6b45,
+            #123d2d
+        );
+
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.home-hero-overlay {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: 2;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.58) 42%,
+            rgba(0, 0, 0, 0.25) 75%,
+            rgba(0, 0, 0, 0.10) 100%
+        );
+
+}
+
+
+/* =========================================================
+   CAPTION
+========================================================= */
+
+.home-hero-caption {
+
+    position: absolute !important;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    text-align: left;
+
+    padding: 0;
+
+    margin: 0;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.home-hero-content {
+
+    max-width: 760px;
+
+    padding-top: 20px;
+
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.home-hero-title {
+
+    margin: 0 0 25px 0;
+
+    padding: 0;
+
+    font-size: clamp(
+        2.5rem,
+        5vw,
+        4.8rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.05;
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+.home-hero-subtitle {
+
+    margin: 0 0 30px 0;
+
+    padding: 0;
+
+    max-width: 680px;
+
+    font-size: 1.25rem;
+
+    line-height: 1.8;
+
+    color: rgba(255, 255, 255, 0.94);
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.home-hero-buttons .btn {
+
+    font-weight: 700;
+
+    border-radius: 6px;
+
+    padding: 13px 28px;
+
+}
+
+
+/* =========================================================
+   INDICATORS
+========================================================= */
+
+.home-hero .carousel-indicators {
+
+    position: absolute;
+
+    z-index: 10;
+
+    bottom: 25px;
+
+    margin: 0;
+
+}
+
+
+.home-hero .carousel-indicators button {
+
+    width: 35px;
+
+    height: 4px;
+
+    margin: 0 5px;
+
+    border: 0;
+
+    opacity: 0.55;
+
+}
+
+
+.home-hero .carousel-indicators button.active {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.home-hero-control {
+
+    z-index: 10;
+
+    width: 8%;
+
+}
+
+
+/* =========================================================
+   FALLBACK HERO
+========================================================= */
+
+.home-hero-fallback {
+
+    width: 100%;
+
+    height: 620px;
+
+    min-height: 620px;
+
+    display: flex;
+
+    align-items: center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0d6b45,
+            #123d2d
+        );
+
+    color: #ffffff;
+
+}
+
+
+.home-hero-fallback-content {
+
+    max-width: 760px;
+
+}
+
+
+.home-hero-fallback h1 {
+
+    margin-bottom: 25px;
+
+    font-size: clamp(
+        2.5rem,
+        5vw,
+        4.5rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.1;
+
+}
+
+
+.home-hero-fallback h1 span {
+
+    display: block;
+
+    color: #ffc107;
+
+}
+
+
+.home-hero-fallback p {
+
+    max-width: 680px;
+
+    margin-bottom: 30px;
+
+    font-size: 1.2rem;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .home-hero {
+
+        height: 520px;
+
+        min-height: 520px;
+
+    }
+
+
+    .home-hero-carousel {
+
+        height: 520px;
+
+        min-height: 520px;
+
+    }
+
+
+    .home-hero-carousel .carousel-inner {
+
+        height: 520px;
+
+        min-height: 520px;
+
+    }
+
+
+    .home-hero-item {
+
+        height: 520px !important;
+
+        min-height: 520px !important;
+
+    }
+
+
+    .home-hero-image {
+
+        height: 520px !important;
+
+        min-height: 520px !important;
+
+    }
+
+
+    .home-hero-caption {
+
+        padding: 0 20px;
+
+    }
+
+
+    .home-hero-content {
+
+        max-width: 100%;
+
+    }
+
+
+    .home-hero-title {
+
+        font-size: 2.4rem;
+
+        line-height: 1.1;
+
+    }
+
+
+    .home-hero-subtitle {
+
+        font-size: 1rem;
+
+        line-height: 1.6;
+
+    }
+
+
+    .home-hero-control {
+
+        width: 12%;
+
+    }
+
+
+    .home-hero-fallback {
+
+        height: 520px;
+
+        min-height: 520px;
+
+        padding: 60px 20px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .home-hero {
+
+        height: 500px;
+
+        min-height: 500px;
+
+    }
+
+
+    .home-hero-carousel {
+
+        height: 500px;
+
+        min-height: 500px;
+
+    }
+
+
+    .home-hero-carousel .carousel-inner {
+
+        height: 500px;
+
+        min-height: 500px;
+
+    }
+
+
+    .home-hero-item {
+
+        height: 500px !important;
+
+        min-height: 500px !important;
+
+    }
+
+
+    .home-hero-image {
+
+        height: 500px !important;
+
+        min-height: 500px !important;
+
+    }
+
+
+    .home-hero-title {
+
+        font-size: 2rem;
+
+    }
+
+
+    .home-hero-subtitle {
+
+        font-size: 0.95rem;
+
+    }
+
+}
+
+</style>

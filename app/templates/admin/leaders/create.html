@@ -1,0 +1,110 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+Add Leader
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ======================================================
+         PAGE HEADER
+    ======================================================= -->
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="mb-1">
+
+                <i class="fas fa-user-plus text-primary me-2"></i>
+
+                Add Leader
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Add a member of the Apex Citizens of Ghana leadership team.
+
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('leaders.index') }}"
+            class="btn btn-secondary"
+        >
+
+            <i class="fas fa-arrow-left me-1"></i>
+
+            Back to Leadership
+
+        </a>
+
+    </div>
+
+
+    <!-- ======================================================
+         FLASH MESSAGES
+    ======================================================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="alert alert-{{ category }}
+                           alert-dismissible fade show"
+                    role="alert"
+                >
+
+                    <i class="fas
+                        {% if category == 'success' %}
+                            fa-check-circle
+                        {% elif category == 'danger' %}
+                            fa-exclamation-circle
+                        {% elif category == 'warning' %}
+                            fa-exclamation-triangle
+                        {% else %}
+                            fa-info-circle
+                        {% endif %}
+                        me-2">
+                    </i>
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                    ></button>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- ======================================================
+         FORM
+    ======================================================= -->
+
+    {% set form_title = "Leadership Information" %}
+
+    {% set leader = None %}
+
+    {% include "admin/leaders/_form.html" %}
+
+</div>
+
+{% endblock %}

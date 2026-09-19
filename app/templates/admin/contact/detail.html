@@ -1,0 +1,409 @@
+
+{% extends "admin/layout.html" %}
+
+{% block title %}View Message{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="fas fa-envelope-open-text me-2"></i>
+                Message Details
+            </h2>
+
+            <p class="text-muted mb-0">
+                View and manage a message received from a website visitor.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('contact.admin_index') }}"
+            class="btn btn-outline-secondary"
+        >
+            <i class="fas fa-arrow-left me-1"></i>
+            All Messages
+        </a>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Message Details -->
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <!-- Subject Header -->
+                <div class="card-header bg-white py-3">
+
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+
+                        <h4 class="fw-bold mb-0">
+                            {{ message.subject or "No Subject" }}
+                        </h4>
+
+                        {% if message.is_read %}
+
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-envelope-open me-1"></i>
+                                Read
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-primary">
+                                <i class="fas fa-envelope me-1"></i>
+                                New
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Sender Information -->
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-4">
+
+                        <div
+                            class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3"
+                            style="width: 55px; height: 55px; font-size: 1.25rem;"
+                        >
+                            <i class="fas fa-user"></i>
+                        </div>
+
+                        <div>
+
+                            <h5 class="mb-1 fw-bold">
+                                {{ message.name }}
+                            </h5>
+
+                            <a
+                                href="mailto:{{ message.email }}"
+                                class="text-decoration-none"
+                            >
+                                {{ message.email }}
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- Contact Information -->
+                    <div class="row g-3 mb-4">
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3 h-100">
+
+                                <small class="text-muted d-block mb-1">
+                                    <i class="fas fa-phone me-1"></i>
+                                    Phone Number
+                                </small>
+
+                                {% if message.phone %}
+
+                                    <strong>
+                                        {{ message.phone }}
+                                    </strong>
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        Not provided
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3 h-100">
+
+                                <small class="text-muted d-block mb-1">
+                                    <i class="fas fa-calendar-alt me-1"></i>
+                                    Received On
+                                </small>
+
+                                {% if message.created_at %}
+
+                                    <strong>
+                                        {{ message.created_at.strftime("%d %B %Y") }}
+                                    </strong>
+
+                                    <br>
+
+                                    <small class="text-muted">
+                                        {{ message.created_at.strftime("%H:%M") }}
+                                    </small>
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        Date unavailable
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Message Content -->
+                    <h6 class="fw-bold mb-3">
+                        <i class="fas fa-comment-alt me-1"></i>
+                        Message
+                    </h6>
+
+                    <div
+                        class="bg-light border rounded p-4"
+                        style="white-space: pre-wrap; overflow-wrap: anywhere; min-height: 150px;"
+                    >{{ message.message }}</div>
+
+                </div>
+
+
+                <!-- Footer Actions -->
+                <div class="card-footer bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    <a
+                        href="{{ url_for('contact.admin_index') }}"
+                        class="btn btn-secondary"
+                    >
+                        <i class="fas fa-arrow-left me-1"></i>
+                        Back
+                    </a>
+
+
+                    <div class="d-flex gap-2">
+
+                        {% if message.email %}
+
+                            <a
+                                href="mailto:{{ message.email }}?subject=Re: {{ message.subject or 'Your Message' }}"
+                                class="btn btn-primary"
+                            >
+                                <i class="fas fa-reply me-1"></i>
+                                Reply by Email
+                            </a>
+
+                        {% endif %}
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('contact.remove', id=message.id) }}"
+                            class="m-0"
+                            onsubmit="return confirm('Delete this message? This action cannot be undone.');"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                            >
+                                <i class="fas fa-trash me-1"></i>
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+
+            <!-- Sender Card -->
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="fas fa-user-circle me-1"></i>
+                        Sender Information
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Full Name
+                        </small>
+
+                        <strong>
+                            {{ message.name }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Email Address
+                        </small>
+
+                        {% if message.email %}
+
+                            <a
+                                href="mailto:{{ message.email }}"
+                                class="text-decoration-none text-break"
+                            >
+                                {{ message.email }}
+                            </a>
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                Not provided
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Phone Number
+                        </small>
+
+                        {% if message.phone %}
+
+                            <a
+                                href="tel:{{ message.phone }}"
+                                class="text-decoration-none"
+                            >
+                                {{ message.phone }}
+                            </a>
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                Not provided
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div>
+
+                        <small class="text-muted d-block">
+                            Message ID
+                        </small>
+
+                        <strong>
+                            #{{ message.id }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Message Status Card -->
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Message Status
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <span class="text-muted">
+                            Read Status
+                        </span>
+
+                        {% if message.is_read %}
+
+                            <span class="badge bg-success">
+                                Read
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-warning text-dark">
+                                Unread
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <span class="text-muted">
+                            Reply Status
+                        </span>
+
+                        {% if message.replied %}
+
+                            <span class="badge bg-success">
+                                Replied
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-secondary">
+                                Not Replied
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

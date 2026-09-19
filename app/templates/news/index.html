@@ -1,0 +1,339 @@
+{% extends "layouts/public.html" %}
+
+{% block title %}
+News | Apex Citizens of Ghana
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =====================================================
+     NEWS HEADER
+====================================================== -->
+
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <span class="text-success fw-bold text-uppercase">
+                Latest Updates
+            </span>
+
+            <h1 class="display-5 fw-bold mt-2">
+                News & Updates
+            </h1>
+
+            <p class="text-muted lead mb-0">
+                Stay informed about the latest activities,
+                initiatives and developments of Apex Citizens of Ghana.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEWS ARTICLES
+====================================================== -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        {% if news.items %}
+
+            <div class="row g-4">
+
+                {% for article in news.items %}
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <article class="card h-100 border-0 shadow-sm overflow-hidden">
+
+                            <!-- IMAGE -->
+
+                            {% if article.featured_image %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename='uploads/news/' ~ article.featured_image
+                                    ) }}"
+                                    alt="{{ article.title }}"
+                                    class="card-img-top"
+                                    style="
+                                        height: 230px;
+                                        object-fit: cover;
+                                    "
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="bg-light d-flex align-items-center justify-content-center"
+                                    style="height: 230px;"
+                                >
+
+                                    <i
+                                        class="fas fa-newspaper fa-3x text-success"
+                                    ></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- CONTENT -->
+
+                            <div class="card-body d-flex flex-column">
+
+                                <!-- DATE -->
+
+                                {% if article.published_at %}
+
+                                    <small class="text-success fw-semibold mb-2">
+
+                                        <i class="fas fa-calendar-alt me-1"></i>
+
+                                        {{ article.published_at.strftime("%d %B %Y") }}
+
+                                    </small>
+
+                                {% endif %}
+
+
+                                <!-- TITLE -->
+
+                                <h3 class="h5 fw-bold">
+
+                                    {{ article.title }}
+
+                                </h3>
+
+
+                                <!-- EXCERPT -->
+
+                                <p class="text-muted">
+
+                                    {{ article.content
+                                        | striptags
+                                        | truncate(150, True, "...")
+                                    }}
+
+                                </p>
+
+
+                                <!-- BUTTON -->
+
+                                <div class="mt-auto pt-3">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'main.news_detail',
+                                            slug=article.slug
+                                        ) }}"
+                                        class="btn btn-outline-success"
+                                    >
+
+                                        Read More
+
+                                        <i class="fas fa-arrow-right ms-2"></i>
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- =================================================
+                 PAGINATION
+            ================================================== -->
+
+            {% if news.pages > 1 %}
+
+                <nav
+                    class="mt-5"
+                    aria-label="News pagination"
+                >
+
+                    <ul class="pagination justify-content-center">
+
+
+                        <!-- PREVIOUS -->
+
+                        {% if news.has_prev %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="{{ url_for(
+                                        'main.news',
+                                        page=news.prev_num
+                                    ) }}"
+                                >
+
+                                    <i class="fas fa-chevron-left me-1"></i>
+                                    Previous
+
+                                </a>
+
+                            </li>
+
+                        {% else %}
+
+                            <li class="page-item disabled">
+
+                                <span class="page-link">
+
+                                    <i class="fas fa-chevron-left me-1"></i>
+                                    Previous
+
+                                </span>
+
+                            </li>
+
+                        {% endif %}
+
+
+                        <!-- PAGE NUMBERS -->
+
+                        {% for page_num in news.iter_pages(
+                            left_edge=1,
+                            right_edge=1,
+                            left_current=2,
+                            right_current=2
+                        ) %}
+
+                            {% if page_num %}
+
+                                {% if page_num == news.page %}
+
+                                    <li class="page-item active">
+
+                                        <span class="page-link">
+                                            {{ page_num }}
+                                        </span>
+
+                                    </li>
+
+                                {% else %}
+
+                                    <li class="page-item">
+
+                                        <a
+                                            class="page-link"
+                                            href="{{ url_for(
+                                                'main.news',
+                                                page=page_num
+                                            ) }}"
+                                        >
+                                            {{ page_num }}
+                                        </a>
+
+                                    </li>
+
+                                {% endif %}
+
+                            {% else %}
+
+                                <li class="page-item disabled">
+
+                                    <span class="page-link">
+                                        …
+                                    </span>
+
+                                </li>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        <!-- NEXT -->
+
+                        {% if news.has_next %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="{{ url_for(
+                                        'main.news',
+                                        page=news.next_num
+                                    ) }}"
+                                >
+
+                                    Next
+                                    <i class="fas fa-chevron-right ms-1"></i>
+
+                                </a>
+
+                            </li>
+
+                        {% else %}
+
+                            <li class="page-item disabled">
+
+                                <span class="page-link">
+
+                                    Next
+                                    <i class="fas fa-chevron-right ms-1"></i>
+
+                                </span>
+
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </nav>
+
+            {% endif %}
+
+
+        {% else %}
+
+            <!-- =================================================
+                 NO NEWS
+            ================================================== -->
+
+            <div class="text-center py-5">
+
+                <i
+                    class="fas fa-newspaper fa-4x text-muted mb-3"
+                ></i>
+
+                <h3>
+                    No News Available
+                </h3>
+
+                <p class="text-muted">
+                    There are currently no published news articles.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+{% endblock %}

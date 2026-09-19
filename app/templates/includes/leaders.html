@@ -1,0 +1,89 @@
+<section class="leaders-section py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="section-subtitle">
+                Leadership
+            </span>
+
+            <h2 class="section-title">
+                Meet Our Leadership Team
+            </h2>
+
+        </div>
+
+        <div class="row g-4">
+
+            {% for leader in leaders %}
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="leader-card text-center">
+
+                    {% if leader.photo %}
+                        <img src="{{ url_for('static', filename='uploads/leaders/' ~ leader.photo) }}"
+                             class="leader-photo"
+                             alt="{{ leader.name }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/avatar.png') }}"
+                             class="leader-photo"
+                             alt="{{ leader.name }}">
+                    {% endif %}
+
+                    <h5 class="mt-3">
+                        {{ leader.name }}
+                    </h5>
+
+                    <p class="text-primary">
+                        {{ leader.position }}
+                    </p>
+
+                    {% if leader.bio %}
+                    <p class="small text-muted">
+                        {{ leader.bio|truncate(100) }}
+                    </p>
+                    {% endif %}
+
+                    <div class="leader-social">
+
+                        {% if leader.facebook %}
+                        <a href="{{ leader.facebook }}" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if leader.twitter %}
+                        <a href="{{ leader.twitter }}" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if leader.linkedin %}
+                        <a href="{{ leader.linkedin }}" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="col-12 text-center">
+
+                <p>No leadership records available.</p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>

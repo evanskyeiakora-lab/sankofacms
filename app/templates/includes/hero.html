@@ -1,0 +1,131 @@
+{% if slides %}
+
+<section class="hero-section">
+
+    <div class="swiper heroSwiper">
+
+        <div class="swiper-wrapper">
+
+            {% for slide in slides %}
+
+            <div 
+
+                 <div
+    class="swiper-slide hero-slide"
+    data-bg="{{ url_for('static', filename='uploads/hero/' ~ slide.image) }}"
+>
+                    <div class="hero-overlay">
+
+                        <div class="container">
+
+                            <div class="row align-items-center">
+
+                                <div class="col-lg-8">
+
+                                    <div class="hero-content"
+                                         data-aos="fade-right">
+
+                                        <span class="badge bg-warning text-dark mb-3 px-3 py-2">
+                                            Welcome to Apex Citizens of Ghana
+                                        </span>
+
+                                        <h1 class="display-3 fw-bold mb-4">
+                                            {{ slide.title }}
+                                        </h1>
+
+                                        {% if slide.subtitle %}
+                                        <p class="lead mb-4">
+                                            {{ slide.subtitle }}
+                                        </p>
+                                        {% endif %}
+
+                                        {% if slide.button_text %}
+                                        <a href="{{ slide.button_url }}"
+                                           class="btn btn-primary btn-lg me-3">
+                                            {{ slide.button_text }}
+                                        </a>
+                                        {% endif %}
+
+                                        <a href="{{ url_for('main.about') }}"
+                                           class="btn btn-outline-light btn-lg">
+                                            Learn More
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="swiper-pagination"></div>
+
+        <div class="swiper-button-next"></div>
+
+        <div class="swiper-button-prev"></div>
+
+    </div>
+
+</section>
+
+{% else %}
+
+<section class="hero-section bg-success text-white">
+
+    <div class="container">
+
+        <div class="row align-items-center" style="min-height:650px;">
+
+            <div class="col-lg-8">
+
+                <h1 class="display-3 fw-bold">
+                    Apex Citizens of Ghana
+                </h1>
+
+                <p class="lead mt-4">
+                    Welcome to the official website of Apex Citizens of Ghana.
+                    Together we build stronger communities, empower citizens,
+                    and create lasting national impact.
+                </p>
+
+                <a href="#about"
+                   class="btn btn-warning btn-lg">
+                    Explore More
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".hero-slide").forEach(function (slide) {
+
+        const image = slide.dataset.bg;
+
+        if (image) {
+            slide.style.backgroundImage = `url("${image}")`;
+        }
+
+    });
+
+});
+</script>

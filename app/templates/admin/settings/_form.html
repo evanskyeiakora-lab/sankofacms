@@ -1,0 +1,233 @@
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <!-- General Information -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">General Information</h5>
+        </div>
+        <div class="card-body">
+
+            <div class="mb-3">
+                {{ form.site_name.label(class="form-label") }}
+                {{ form.site_name(class="form-control") }}
+                {% for error in form.site_name.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.tagline.label(class="form-label") }}
+                {{ form.tagline(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.about.label(class="form-label") }}
+                {{ form.about(class="form-control", rows="4") }}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Branding -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Branding</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    {% if settings.logo %}
+                        <img src="{{ url_for('static', filename='uploads/settings/' ~ settings.logo) }}"
+                             class="img-fluid mb-3"
+                             style="max-height:100px;">
+                    {% endif %}
+
+                    {{ form.logo.label(class="form-label") }}
+                    {{ form.logo(class="form-control") }}
+
+                </div>
+
+                <div class="col-md-6">
+
+                    {% if settings.favicon %}
+                        <img src="{{ url_for('static', filename='uploads/settings/' ~ settings.favicon) }}"
+                             class="img-fluid mb-3"
+                             style="max-height:64px;">
+                    {% endif %}
+
+                    {{ form.favicon.label(class="form-label") }}
+                    {{ form.favicon(class="form-control") }}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Contact Information</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control") }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    {{ form.phone.label(class="form-label") }}
+                    {{ form.phone(class="form-control") }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    {{ form.whatsapp.label(class="form-label") }}
+                    {{ form.whatsapp(class="form-control") }}
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    {{ form.address.label(class="form-label") }}
+                    {{ form.address(class="form-control", rows="3") }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Social Media -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Social Media</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    {{ form.facebook.label(class="form-label") }}
+                    {{ form.facebook(class="form-control") }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    {{ form.instagram.label(class="form-label") }}
+                    {{ form.instagram(class="form-control") }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    {{ form.twitter.label(class="form-label") }}
+                    {{ form.twitter(class="form-control") }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    {{ form.youtube.label(class="form-label") }}
+                    {{ form.youtube(class="form-control") }}
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    {{ form.linkedin.label(class="form-label") }}
+                    {{ form.linkedin(class="form-control") }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">SEO Settings</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+                {{ form.meta_title.label(class="form-label") }}
+                {{ form.meta_title(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.meta_description.label(class="form-label") }}
+                {{ form.meta_description(class="form-control", rows="3") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.meta_keywords.label(class="form-label") }}
+                {{ form.meta_keywords(class="form-control", rows="3") }}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Google Map -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Google Maps</h5>
+        </div>
+
+        <div class="card-body">
+
+            {{ form.google_map.label(class="form-label") }}
+            {{ form.google_map(class="form-control", rows="5") }}
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Footer</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+                {{ form.footer_text.label(class="form-label") }}
+                {{ form.footer_text(class="form-control", rows="3") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.copyright_text.label(class="form-label") }}
+                {{ form.copyright_text(class="form-control") }}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- System -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">System</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="form-check form-switch">
+                {{ form.maintenance_mode(class="form-check-input") }}
+                {{ form.maintenance_mode.label(class="form-check-label") }}
+            </div>
+
+        </div>
+    </div>
+
+    <div class="text-end">
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">
+            Cancel
+        </a>
+
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+
+</form>

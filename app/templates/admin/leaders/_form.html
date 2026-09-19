@@ -1,0 +1,765 @@
+<div class="card shadow-sm border-0">
+
+    <!-- ======================================================
+         CARD HEADER
+    ======================================================= -->
+
+    <div class="card-header bg-white py-3">
+
+        <h5 class="mb-0">
+
+            <i class="fas fa-user-tie text-primary me-2"></i>
+
+            {{ form_title }}
+
+        </h5>
+
+    </div>
+
+
+    <!-- ======================================================
+         CARD BODY
+    ======================================================= -->
+
+    <div class="card-body p-4">
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            novalidate
+        >
+
+            {{ form.hidden_tag() }}
+
+
+            <div class="row g-4">
+
+
+                <!-- ==================================================
+                     LEFT COLUMN
+                =================================================== -->
+
+                <div class="col-lg-8">
+
+
+                    <!-- ==============================================
+                         NAME
+                    =============================================== -->
+
+                    <div class="mb-4">
+
+                        {{ form.name.label(
+                            class="form-label fw-semibold"
+                        ) }}
+
+                        {{ form.name(
+                            class="form-control form-control-lg",
+                            placeholder="Enter full name"
+                        ) }}
+
+                        {% for error in form.name.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                <i class="fas fa-exclamation-circle me-1"></i>
+
+                                {{ error }}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- ==============================================
+                         POSITION
+                    =============================================== -->
+
+                    <div class="mb-4">
+
+                        {{ form.position.label(
+                            class="form-label fw-semibold"
+                        ) }}
+
+                        {{ form.position(
+                            class="form-control",
+                            placeholder="e.g. National Chairman"
+                        ) }}
+
+                        {% for error in form.position.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                <i class="fas fa-exclamation-circle me-1"></i>
+
+                                {{ error }}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- ==============================================
+                         BIOGRAPHY
+                    =============================================== -->
+
+                    <div class="mb-4">
+
+                        {{ form.bio.label(
+                            class="form-label fw-semibold"
+                        ) }}
+
+                        {{ form.bio(
+                            class="form-control",
+                            rows="8",
+                            placeholder="Write a brief biography of the leader..."
+                        ) }}
+
+                        <div class="form-text">
+
+                            Provide a short professional biography,
+                            experience and responsibilities.
+
+                        </div>
+
+
+                        {% for error in form.bio.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                <i class="fas fa-exclamation-circle me-1"></i>
+
+                                {{ error }}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- ==============================================
+                         CONTACT INFORMATION
+                    =============================================== -->
+
+                    <div class="border-top pt-4 mb-4">
+
+                        <h6 class="fw-bold mb-3">
+
+                            <i class="fas fa-address-card text-primary me-2"></i>
+
+                            Contact Information
+
+                        </h6>
+
+
+                        <div class="row">
+
+                            <!-- EMAIL -->
+
+                            <div class="col-md-6 mb-3">
+
+                                {{ form.email.label(
+                                    class="form-label fw-semibold"
+                                ) }}
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+
+                                        <i class="fas fa-envelope"></i>
+
+                                    </span>
+
+                                    {{ form.email(
+                                        class="form-control",
+                                        placeholder="leader@example.com"
+                                    ) }}
+
+                                </div>
+
+
+                                {% for error in form.email.errors %}
+
+                                    <div class="text-danger small mt-1">
+
+                                        {{ error }}
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="col-md-6 mb-3">
+
+                                {{ form.phone.label(
+                                    class="form-label fw-semibold"
+                                ) }}
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+
+                                        <i class="fas fa-phone"></i>
+
+                                    </span>
+
+                                    {{ form.phone(
+                                        class="form-control",
+                                        placeholder="+233 XX XXX XXXX"
+                                    ) }}
+
+                                </div>
+
+
+                                {% for error in form.phone.errors %}
+
+                                    <div class="text-danger small mt-1">
+
+                                        {{ error }}
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==============================================
+                         SOCIAL MEDIA
+                    =============================================== -->
+
+                    <div class="border-top pt-4">
+
+                        <h6 class="fw-bold mb-3">
+
+                            <i class="fas fa-share-alt text-primary me-2"></i>
+
+                            Social Media
+
+                        </h6>
+
+
+                        <!-- FACEBOOK -->
+
+                        <div class="mb-3">
+
+                            {{ form.facebook.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+
+                                    <i class="fab fa-facebook-f"></i>
+
+                                </span>
+
+                                {{ form.facebook(
+                                    class="form-control",
+                                    placeholder="https://facebook.com/..."
+                                ) }}
+
+                            </div>
+
+
+                            {% for error in form.facebook.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ error }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- TWITTER -->
+
+                        <div class="mb-3">
+
+                            {{ form.twitter.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+
+                                    <i class="fab fa-twitter"></i>
+
+                                </span>
+
+                                {{ form.twitter(
+                                    class="form-control",
+                                    placeholder="https://twitter.com/..."
+                                ) }}
+
+                            </div>
+
+
+                            {% for error in form.twitter.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ error }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- LINKEDIN -->
+
+                        <div class="mb-3">
+
+                            {{ form.linkedin.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+
+                                    <i class="fab fa-linkedin-in"></i>
+
+                                </span>
+
+                                {{ form.linkedin(
+                                    class="form-control",
+                                    placeholder="https://linkedin.com/in/..."
+                                ) }}
+
+                            </div>
+
+
+                            {% for error in form.linkedin.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ error }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     RIGHT COLUMN
+                =================================================== -->
+
+                <div class="col-lg-4">
+
+
+                    <!-- ==============================================
+                         PHOTO CARD
+                    =============================================== -->
+
+                    <div class="card border mb-4">
+
+                        <div class="card-header bg-light">
+
+                            <h6 class="mb-0 fw-bold">
+
+                                <i class="fas fa-camera text-primary me-2"></i>
+
+                                Leader Photo
+
+                            </h6>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <!-- PREVIEW -->
+
+                            <div
+                                id="leaderPhotoPreview"
+                                class="leader-photo-preview mb-3"
+                            >
+
+                                <div class="text-center text-muted">
+
+                                    <i
+                                        class="fas fa-user"
+                                        style="font-size: 55px;"
+                                    ></i>
+
+                                    <p class="small mb-0 mt-2">
+
+                                        Photo preview
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            {{ form.photo.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+
+                            {{ form.photo(
+                                class="form-control",
+                                id="leaderPhotoInput",
+                                accept=".jpg,.jpeg,.png,.webp"
+                            ) }}
+
+
+                            <div class="form-text">
+
+                                Recommended: square portrait image.
+
+                                <br>
+
+                                JPG, JPEG, PNG or WEBP.
+
+                            </div>
+
+
+                            {% for error in form.photo.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    <i
+                                        class="fas fa-exclamation-circle me-1"
+                                    ></i>
+
+                                    {{ error }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==============================================
+                         PUBLISH / DISPLAY OPTIONS
+                    =============================================== -->
+
+                    <div class="card border">
+
+                        <div class="card-header bg-light">
+
+                            <h6 class="mb-0 fw-bold">
+
+                                <i class="fas fa-cog text-primary me-2"></i>
+
+                                Display Options
+
+                            </h6>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <!-- ACTIVE -->
+
+                            <div class="form-check form-switch mb-4">
+
+                                {{ form.is_active(
+                                    class="form-check-input",
+                                    role="switch"
+                                ) }}
+
+                                {{ form.is_active.label(
+                                    class="form-check-label fw-semibold"
+                                ) }}
+
+                                <div class="form-text ms-0">
+
+                                    Active leaders appear on the
+                                    public website.
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- DISPLAY ORDER -->
+
+                            <div class="mb-3">
+
+                                {{ form.display_order.label(
+                                    class="form-label fw-semibold"
+                                ) }}
+
+                                {{ form.display_order(
+                                    class="form-control",
+                                    min="1"
+                                ) }}
+
+                                <div class="form-text">
+
+                                    Lower numbers appear first.
+
+                                </div>
+
+
+                                {% for error in form.display_order.errors %}
+
+                                    <div class="text-danger small mt-1">
+
+                                        {{ error }}
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ======================================================
+                 FORM ACTIONS
+            ======================================================= -->
+
+            <div class="border-top mt-4 pt-4">
+
+                {{ form.submit(
+                    class="btn btn-primary px-4 py-2"
+                ) }}
+
+
+                <a
+                    href="{{ url_for('leaders.index') }}"
+                    class="btn btn-secondary px-4 py-2 ms-2"
+                >
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================================
+     PHOTO PREVIEW + STYLING
+=========================================================== -->
+
+<style>
+
+.leader-photo-preview {
+
+    width: 100%;
+
+    height: 280px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #f5f7f9;
+
+    border: 2px dashed #d8dee4;
+
+    border-radius: 12px;
+
+}
+
+
+.leader-photo-preview img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.input-group-text {
+
+    min-width: 42px;
+
+    justify-content: center;
+
+}
+
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color: #198754;
+
+    box-shadow:
+        0 0 0 0.2rem rgba(25, 135, 84, 0.12);
+
+}
+
+
+@media (max-width: 991px) {
+
+    .leader-photo-preview {
+
+        height: 320px;
+
+    }
+
+}
+
+</style>
+
+
+<!-- ==========================================================
+     JAVASCRIPT
+=========================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const input =
+            document.getElementById(
+                "leaderPhotoInput"
+            );
+
+        const preview =
+            document.getElementById(
+                "leaderPhotoPreview"
+            );
+
+
+        if (!input || !preview) {
+            return;
+        }
+
+
+        input.addEventListener(
+            "change",
+            function (event) {
+
+                const file =
+                    event.target.files[0];
+
+
+                if (!file) {
+
+                    preview.innerHTML = `
+
+                        <div class="text-center text-muted">
+
+                            <i
+                                class="fas fa-user"
+                                style="font-size: 55px;"
+                            ></i>
+
+                            <p class="small mb-0 mt-2">
+
+                                Photo preview
+
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+                }
+
+
+                if (!file.type.startsWith("image/")) {
+
+                    preview.innerHTML = `
+
+                        <div class="text-center text-danger">
+
+                            <i
+                                class="fas fa-exclamation-triangle"
+                                style="font-size: 45px;"
+                            ></i>
+
+                            <p class="small mb-0 mt-2">
+
+                                Please select an image file.
+
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    input.value = "";
+
+                    return;
+                }
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function (e) {
+
+                        preview.innerHTML = `
+
+                            <img
+                                src="${e.target.result}"
+                                alt="Leader photo preview"
+                            >
+
+                        `;
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            }
+        );
+
+    }
+);
+
+</script>

@@ -1,0 +1,18 @@
+{% extends "layouts/public.html" %}
+
+{% block title %}
+{{ settings.site_name if settings else "Apex Citizens of Ghana" }}
+{% endblock %}
+
+{% block content %}
+
+{% include "home/hero.html" %}
+{% include "home/about-us.html" %}
+{% include "home/statistics.html" %}
+{% include "home/news.html" %}
+{% include "home/events.html" %}
+{% include "home/leaders.html" %}
+{% include "home/gallery.html" %}
+{% include "home/cta.html" %}
+
+{% endblock %}

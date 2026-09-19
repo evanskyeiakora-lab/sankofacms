@@ -1,0 +1,61 @@
+
+{% extends "layouts/public.html" %}
+
+{% block title %}
+    {{ settings.site_name if settings else "Apex Citizens of Ghana" }}
+{% endblock %}
+
+{% block extra_head %}
+
+    {{ super() }}
+
+    {# =====================================================
+       HOMEPAGE STRUCTURED DATA
+       ===================================================== #}
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "{{ request.url_root }}#organization",
+                "name": {{ (settings.site_name if settings and settings.site_name else "Apex Citizens of Ghana") | tojson }},
+                "url": "{{ request.url_root }}",
+                "logo": "{{ url_for('static', filename='images/logo.png', _external=True) }}"
+            },
+            {
+                "@type": "WebSite",
+                "@id": "{{ request.url_root }}#website",
+                "name": {{ (settings.site_name if settings and settings.site_name else "Apex Citizens of Ghana") | tojson }},
+                "url": "{{ request.url_root }}",
+                "publisher": {
+                    "@id": "{{ request.url_root }}#organization"
+                }
+            }
+        ]
+    }
+    </script>
+
+{% endblock %}
+
+
+{% block content %}
+
+    {% include "home/hero.html" %}
+
+    {% include "home/about-us.html" %}
+
+    {% include "home/news.html" %}
+
+    {% include "home/events.html" %}
+
+    {% include "home/gallery.html" %}
+
+    {% include "home/leaders.html" %}
+
+    {% include "home/statistics.html" %}
+
+    {% include "home/cta.html" %}
+
+{% endblock %}

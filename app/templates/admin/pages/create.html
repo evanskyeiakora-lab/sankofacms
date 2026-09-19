@@ -1,0 +1,328 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+Create Page
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ==========================================
+         PAGE HEADER
+         ========================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Create Page
+            </h2>
+
+            <p class="text-muted mb-0">
+                Create a new website page.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('pages.index') }}"
+            class="btn btn-outline-secondary"
+        >
+
+            <i class="bi bi-arrow-left me-1"></i>
+
+            Back to Pages
+
+        </a>
+
+    </div>
+
+
+    <!-- ==========================================
+         FORM
+         ========================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+
+            <strong>
+                Page Information
+            </strong>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {{ form.hidden_tag() }}
+
+
+                <!-- ==================================
+                     TITLE
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.title.label(class="form-label fw-semibold") }}
+
+                    {{ form.title(
+                        class="form-control",
+                        placeholder="Enter page title"
+                    ) }}
+
+                    {% for error in form.title.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     SLUG
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.slug.label(class="form-label fw-semibold") }}
+
+                    {{ form.slug(
+                        class="form-control",
+                        placeholder="leave blank to generate automatically"
+                    ) }}
+
+                    {% if form.slug.description %}
+
+                    <div class="form-text">
+                        {{ form.slug.description }}
+                    </div>
+
+                    {% endif %}
+
+                    {% for error in form.slug.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     PAGE ROLE
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.page_role.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.page_role(
+                        class="form-select"
+                    ) }}
+
+                    <div class="form-text">
+
+                        Select how this page will be used.
+                        Choose <strong>Normal Page</strong> for
+                        ordinary website pages.
+
+                    </div>
+
+                    {% for error in form.page_role.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     CONTENT
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.content.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.content(
+                        class="form-control",
+                        rows="14",
+                        placeholder="Enter page content..."
+                    ) }}
+
+                    {% for error in form.content.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     FEATURED IMAGE
+                     ================================== -->
+
+                <div class="mb-4">
+
+                    {{ form.featured_image.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.featured_image(
+                        class="form-control"
+                    ) }}
+
+                    <div class="form-text">
+
+                        Accepted formats:
+                        JPG, JPEG, PNG and WEBP.
+
+                    </div>
+
+                    {% for error in form.featured_image.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ==================================
+                     SEO
+                     ================================== -->
+
+                <div class="card bg-light border-0 mb-4">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold mb-3">
+
+                            <i class="bi bi-search me-2"></i>
+
+                            SEO Settings
+
+                        </h5>
+
+
+                        <div class="mb-3">
+
+                            {{ form.meta_title.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+                            {{ form.meta_title(
+                                class="form-control",
+                                placeholder="SEO page title"
+                            ) }}
+
+                            {% for error in form.meta_title.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div>
+
+                            {{ form.meta_description.label(
+                                class="form-label fw-semibold"
+                            ) }}
+
+                            {{ form.meta_description(
+                                class="form-control",
+                                rows="4",
+                                placeholder="SEO meta description"
+                            ) }}
+
+                            {% for error in form.meta_description.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     PUBLISH
+                     ================================== -->
+
+                <div class="form-check mb-4">
+
+                    {{ form.is_published(
+                        class="form-check-input"
+                    ) }}
+
+                    {{ form.is_published.label(
+                        class="form-check-label fw-semibold"
+                    ) }}
+
+                </div>
+
+
+                <!-- ==================================
+                     ACTIONS
+                     ================================== -->
+
+                <div class="d-flex gap-2">
+
+                    {{ form.submit(
+                        class="btn btn-primary px-4"
+                    ) }}
+
+                    <a
+                        href="{{ url_for('pages.index') }}"
+                        class="btn btn-outline-secondary"
+                    >
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,150 @@
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="text-success fw-bold text-uppercase">
+                Latest Updates
+            </span>
+
+            <h2 class="display-6 fw-bold mt-2">
+                Latest News
+            </h2>
+
+            <p class="text-muted">
+                Discover the latest news and activities from
+                Apex Citizens of Ghana.
+            </p>
+
+        </div>
+
+
+        {% if latest_news %}
+
+            <div class="row g-4">
+
+                {% for article in latest_news %}
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card h-100 border-0 shadow-sm">
+
+
+                            {% if article.featured_image %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename='uploads/news/' ~ article.featured_image
+                                    ) }}"
+                                    alt="{{ article.title }}"
+                                    class="card-img-top"
+                                    style="
+                                        height:220px;
+                                        object-fit:cover;
+                                    "
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="bg-light d-flex align-items-center justify-content-center"
+                                    style="height:220px;"
+                                >
+
+                                    <i class="fas fa-newspaper fa-3x text-success"></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="card-body">
+
+                                {% if article.published_at %}
+
+                                    <small class="text-success">
+
+                                        <i class="fas fa-calendar-alt me-1"></i>
+
+                                        {{ article.published_at.strftime("%d %B %Y") }}
+
+                                    </small>
+
+                                {% endif %}
+
+
+                                <h3 class="h5 fw-bold mt-2">
+
+                                    {{ article.title }}
+
+                                </h3>
+
+
+                                <p class="text-muted">
+
+                                    {{ article.content
+                                        | striptags
+                                        | truncate(120, True, "...")
+                                    }}
+
+                                </p>
+
+
+                                <a
+                                    href="{{ url_for(
+                                        'main.news_detail',
+                                        slug=article.slug
+                                    ) }}"
+                                    class="btn btn-outline-success"
+                                >
+
+                                    Read More
+
+                                    <i class="fas fa-arrow-right ms-2"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div class="text-center mt-5">
+
+                <a
+                    href="{{ url_for('main.news') }}"
+                    class="btn btn-success px-4"
+                >
+
+                    View All News
+
+                    <i class="fas fa-arrow-right ms-2"></i>
+
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+            <div class="text-center">
+
+                <p class="text-muted">
+                    No published news available yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>

@@ -1,0 +1,17 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Website Settings{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Website Settings</h1>
+    </div>
+
+    {% include "admin/settings/_form.html" %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends "layouts/admin.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block page_title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center">
+
+                {% if current_user.photo %}
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/users/' + current_user.photo) }}"
+                        class="rounded-circle mb-3"
+                        width="160"
+                        height="160"
+                        style="object-fit:cover;">
+
+                {% else %}
+
+                    <img
+                        src="{{ url_for('static', filename='images/avatar.png') }}"
+                        class="rounded-circle mb-3"
+                        width="160"
+                        height="160">
+
+                {% endif %}
+
+                <h4 class="fw-bold">
+
+                    {{ current_user.full_name }}
+
+                </h4>
+
+                <p class="text-muted">
+
+                    {{ current_user.role }}
+
+                </p>
+
+                {% if current_user.is_active %}
+
+                    <span class="badge bg-success">
+
+                        Active
+
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-secondary">
+
+                        Inactive
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-white">
+
+                <strong>
+
+                    Profile Information
+
+                </strong>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-borderless">
+
+                    <tr>
+                        <th width="180">First Name</th>
+                        <td>{{ current_user.first_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Last Name</th>
+                        <td>{{ current_user.last_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Username</th>
+                        <td>{{ current_user.username }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ current_user.email }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Phone</th>
+                        <td>{{ current_user.phone or "-" }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Role</th>
+                        <td>{{ current_user.role }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Last Login</th>
+                        <td>
+
+                            {% if current_user.last_login %}
+
+                                {{ current_user.last_login.strftime("%d %b %Y %I:%M %p") }}
+
+                            {% else %}
+
+                                Never
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <th>Joined</th>
+                        <td>
+
+                            {{ current_user.created_at.strftime("%d %b %Y") }}
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="card-footer bg-white">
+
+                <a
+                    href="{{ url_for('users.edit', id=current_user.id) }}"
+                    class="btn btn-primary">
+
+                    <i class="fas fa-user-edit me-1"></i>
+
+                    Edit Profile
+
+                </a>
+
+                <a
+                    href="{{ url_for('users.change_password') }}"
+                    class="btn btn-warning">
+
+                    <i class="fas fa-key me-1"></i>
+
+                    Change Password
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

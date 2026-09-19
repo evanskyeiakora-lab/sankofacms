@@ -1,0 +1,158 @@
+{% extends "layouts/public.html" %}
+
+{% block title %}
+{{ article.title }} | Apex Citizens of Ghana
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ==========================================================
+     NEWS HEADER
+========================================================== -->
+
+<section class="page-header bg-primary text-white">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+
+                <span class="text-uppercase fw-bold">
+                    Latest News
+                </span>
+
+                <h1 class="display-5 fw-bold mt-2 mb-3">
+                    {{ article.title }}
+                </h1>
+
+                {% if article.published_at %}
+
+                    <p class="mb-0">
+
+                        <i class="fas fa-calendar-alt me-2"></i>
+
+                        {{ article.published_at.strftime('%d %B %Y') }}
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+
+                <span>
+                    Home
+                </span>
+
+                <span class="mx-2">
+                    /
+                </span>
+
+                <span>
+                    News
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+     NEWS ARTICLE
+========================================================== -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-9">
+
+
+                <!-- FEATURED IMAGE -->
+
+                {% if article.featured_image %}
+
+                    <div class="mb-4">
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/news/' ~ article.featured_image
+                            ) }}"
+                            alt="{{ article.title }}"
+                            class="img-fluid rounded shadow-sm w-100"
+                        >
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- ARTICLE -->
+
+                <article class="news-detail">
+
+                    <h2 class="fw-bold mb-4">
+                        {{ article.title }}
+                    </h2>
+
+
+                    {% if article.published_at %}
+
+                        <div class="text-muted mb-4">
+
+                            <i class="fas fa-calendar-alt me-2"></i>
+
+                            Published
+                            {{ article.published_at.strftime('%d %B %Y') }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="news-content">
+
+                        {{ article.content | safe }}
+
+                    </div>
+
+                </article>
+
+
+                <!-- BACK BUTTON -->
+
+                <div class="mt-5">
+
+                    <a
+                        href="{{ url_for('main.news') }}"
+                        class="btn btn-outline-success"
+                    >
+
+                        <i class="fas fa-arrow-left me-2"></i>
+
+                        Back to News
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

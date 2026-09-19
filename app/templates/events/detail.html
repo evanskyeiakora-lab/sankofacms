@@ -1,0 +1,568 @@
+
+{% extends "layouts/public.html" %}
+
+{# ============================================================
+   SEO METADATA
+   ============================================================ #}
+
+{% block title %}
+{{ event.title }} | {{ settings.site_name if settings else "Apex Citizens of Ghana" }}
+{% endblock %}
+
+{% set seo_description = (
+    event.description
+    |striptags
+    |replace('\n', ' ')
+    |replace('\r', ' ')
+)[:160] %}
+
+{% block meta_description %}
+{{ seo_description }}
+{% endblock %}
+
+{% block meta_keywords %}
+{{ event.title }}, Apex Citizens of Ghana, events, community events, Ghana
+{% endblock %}
+
+{% block meta_robots %}
+index, follow
+{% endblock %}
+
+{% block canonical_url %}
+{{ url_for('main.event_detail', slug=event.slug, _external=True) }}
+{% endblock %}
+
+
+{# ============================================================
+   OPEN GRAPH SEO
+   ============================================================ #}
+
+{% block og_title %}
+{{ event.title }} | Apex Citizens of Ghana
+{% endblock %}
+
+{% block og_description %}
+{{ seo_description }}
+{% endblock %}
+
+{% block og_type %}
+event
+{% endblock %}
+
+{% block og_url %}
+{{ url_for('main.event_detail', slug=event.slug, _external=True) }}
+{% endblock %}
+
+{% block og_image %}
+{% if event.featured_image %}
+{{ url_for('static', filename='uploads/events/' ~ event.featured_image, _external=True) }}
+{% else %}
+{{ url_for('static', filename='images/default-event.jpg', _external=True) }}
+{% endif %}
+{% endblock %}
+
+
+{# ============================================================
+   TWITTER CARD SEO
+   ============================================================ #}
+
+{% block twitter_title %}
+{{ event.title }} | Apex Citizens of Ghana
+{% endblock %}
+
+{% block twitter_description %}
+{{ seo_description }}
+{% endblock %}
+
+{% block twitter_image %}
+{% if event.featured_image %}
+{{ url_for('static', filename='uploads/events/' ~ event.featured_image, _external=True) }}
+{% else %}
+{{ url_for('static', filename='images/default-event.jpg', _external=True) }}
+{% endif %}
+{% endblock %}
+
+
+{# ============================================================
+   ADDITIONAL EVENT SEO HEAD CONTENT
+   ============================================================ #}
+
+{% block extra_head %}
+
+{% if event.start_date %}
+<meta property="event:start_time"
+      content="{{ event.start_date.isoformat() }}{% if event.start_time %}T{{ event.start_time.strftime('%H:%M:%S') }}{% endif %}">
+{% endif %}
+
+{% if event.end_date %}
+<meta property="event:end_time"
+      content="{{ event.end_date.isoformat() }}{% if event.end_time %}T{{ event.end_time.strftime('%H:%M:%S') }}{% endif %}">
+{% endif %}
+
+{% if event.venue %}
+<meta property="event:location" content="{{ event.venue }}">
+{% endif %}
+
+{# Event Structured Data #}
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": {{ event.title|tojson }},
+    "description": {{ seo_description|tojson }},
+    "url": {{ url_for('main.event_detail', slug=event.slug, _external=True)|tojson }},
+    {% if event.featured_image %}
+    "image": [
+        {{ url_for('static', filename='uploads/events/' ~ event.featured_image, _external=True)|tojson }}
+    ],
+    {% endif %}
+
+    {% if event.start_date %}
+    "startDate": "{{ event.start_date.isoformat() }}{% if event.start_time %}T{{ event.start_time.strftime('%H:%M:%S') }}{% endif %}",
+    {% endif %}
+
+    {% if event.end_date %}
+    "endDate": "{{ event.end_date.isoformat() }}{% if event.end_time %}T{{ event.end_time.strftime('%H:%M:%S') }}{% endif %}",
+    {% endif %}
+
+    {% if event.venue %}
+    "location": {
+        "@type": "Place",
+        "name": {{ event.venue|tojson }}
+    },
+    {% endif %}
+
+    {% if event.organizer %}
+    "organizer": {
+        "@type": "Organization",
+        "name": {{ event.organizer|tojson }}
+    },
+    {% else %}
+    "organizer": {
+        "@type": "Organization",
+        "name": "Apex Citizens of Ghana"
+    },
+    {% endif %}
+
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+}
+</script>
+
+{% endblock %}
+
+
+{# ============================================================
+   PAGE CONTENT
+   ============================================================ #}
+
+{% block content %}
+
+{% set page_title = event.title %}
+{% set page_subtitle = "Event Details" %}
+
+{% include "includes/page_header.html" %}
+
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+            <!-- ========================================= -->
+            <!-- MAIN EVENT CONTENT -->
+            <!-- ========================================= -->
+
+            <div class="col-lg-8">
+
+                <article class="event-detail">
+
+                    <!-- Featured Image -->
+
+                    {% if event.featured_image %}
+
+                    <div class="mb-4">
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/events/' ~ event.featured_image
+                            ) }}"
+                            class="img-fluid rounded-4 shadow-sm w-100"
+                            alt="{{ event.title }} - Apex Citizens of Ghana event"
+                            width="1200"
+                            height="675"
+                            loading="eager"
+                            decoding="async"
+                            style="
+                                max-height: 520px;
+                                object-fit: cover;
+                            "
+                        >
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- Event Title -->
+
+                    <h1 class="display-6 fw-bold mb-4">
+                        {{ event.title }}
+                    </h1>
+
+
+                    <!-- Description -->
+
+                    <div class="card border-0 shadow-sm mb-4">
+
+                        <div class="card-body p-4">
+
+                            <h2 class="h5 fw-bold mb-4">
+
+                                <i class="fas fa-align-left text-primary me-2"></i>
+
+                                About This Event
+
+                            </h2>
+
+                            <div class="event-description">
+
+                                {{ event.description|safe }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Registration -->
+
+                    {% if event.registration_link %}
+
+                    <div class="card border-0 shadow-sm mb-4">
+
+                        <div class="card-body p-4 text-center">
+
+                            <h2 class="h4 fw-bold mb-2">
+                                Join Us
+                            </h2>
+
+                            <p class="text-muted mb-4">
+
+                                We would be delighted to have you participate
+                                in this event.
+
+                            </p>
+
+                            <a
+                                href="{{ event.registration_link }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-primary btn-lg px-5"
+                                aria-label="Register for {{ event.title }}"
+                            >
+
+                                <i class="fas fa-user-plus me-2"></i>
+
+                                Register Now
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- Back Button -->
+
+                    <div class="mt-4">
+
+                        <a
+                            href="{{ url_for('main.events') }}"
+                            class="btn btn-outline-primary"
+                        >
+
+                            <i class="fas fa-arrow-left me-2"></i>
+
+                            Back to Events
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- SIDEBAR -->
+            <!-- ========================================= -->
+
+            <div class="col-lg-4">
+
+
+                <!-- ================================= -->
+                <!-- EVENT SUMMARY -->
+                <!-- ================================= -->
+
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-header bg-primary text-white py-3">
+
+                        <h2 class="h5 mb-0">
+
+                            <i class="fas fa-calendar-check me-2"></i>
+
+                            Event Summary
+
+                        </h2>
+
+                    </div>
+
+
+                    <div class="card-body p-4">
+
+
+                        {% if event.start_date %}
+
+                        <div class="d-flex mb-4">
+
+                            <i class="fas fa-calendar-alt
+                                      text-primary
+                                      me-3
+                                      mt-1"></i>
+
+                            <div>
+
+                                <small class="text-muted d-block">
+                                    Date
+                                </small>
+
+                                <strong>
+
+                                    {{ event.start_date.strftime('%d %B %Y') }}
+
+                                    {% if event.end_date %}
+
+                                    <br>
+
+                                    <span class="text-muted fw-normal">
+
+                                        to
+                                        {{ event.end_date.strftime('%d %B %Y') }}
+
+                                    </span>
+
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if event.start_time %}
+
+                        <div class="d-flex mb-4">
+
+                            <i class="fas fa-clock
+                                      text-primary
+                                      me-3
+                                      mt-1"></i>
+
+                            <div>
+
+                                <small class="text-muted d-block">
+                                    Time
+                                </small>
+
+                                <strong>
+
+                                    {{ event.start_time.strftime('%I:%M %p') }}
+
+                                    {% if event.end_time %}
+
+                                    <br>
+
+                                    <span class="text-muted fw-normal">
+
+                                        to
+                                        {{ event.end_time.strftime('%I:%M %p') }}
+
+                                    </span>
+
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if event.venue %}
+
+                        <div class="d-flex mb-4">
+
+                            <i class="fas fa-map-marker-alt
+                                      text-primary
+                                      me-3
+                                      mt-1"></i>
+
+                            <div>
+
+                                <small class="text-muted d-block">
+                                    Venue
+                                </small>
+
+                                <strong>
+                                    {{ event.venue }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if event.organizer %}
+
+                        <div class="d-flex">
+
+                            <i class="fas fa-user
+                                      text-primary
+                                      me-3
+                                      mt-1"></i>
+
+                            <div>
+
+                                <small class="text-muted d-block">
+                                    Organizer
+                                </small>
+
+                                <strong>
+                                    {{ event.organizer }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- RELATED EVENTS -->
+                <!-- ================================= -->
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-header bg-primary text-white py-3">
+
+                        <h2 class="h5 mb-0">
+
+                            <i class="fas fa-calendar-days me-2"></i>
+
+                            Related Events
+
+                        </h2>
+
+                    </div>
+
+
+                    <div class="list-group list-group-flush">
+
+                        {% for item in related_events %}
+
+                        <a
+                            href="{{ url_for(
+                                'main.event_detail',
+                                slug=item.slug
+                            ) }}"
+                            class="list-group-item
+                                   list-group-item-action
+                                   py-3"
+                        >
+
+                            <div class="d-flex">
+
+                                <div class="me-3">
+
+                                    <i class="fas fa-calendar-alt
+                                              text-primary"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <strong class="d-block">
+
+                                        {{ item.title }}
+
+                                    </strong>
+
+                                    {% if item.start_date %}
+
+                                    <small class="text-muted">
+
+                                        {{ item.start_date.strftime('%d %b %Y') }}
+
+                                    </small>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                        {% else %}
+
+                        <div class="list-group-item py-4 text-center">
+
+                            <i class="fas fa-calendar-times
+                                      fa-2x
+                                      text-muted
+                                      mb-2"></i>
+
+                            <p class="text-muted mb-0">
+
+                                No related events available.
+
+                            </p>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

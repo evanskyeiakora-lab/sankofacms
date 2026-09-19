@@ -1,0 +1,451 @@
+<div class="card shadow-sm">
+
+    <div class="card-header bg-white">
+
+        <h5 class="mb-0">
+
+            <i class="fas fa-calendar-alt text-primary me-2"></i>
+
+            {{ form_title }}
+
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {{ form.hidden_tag() }}
+
+
+            <!-- ==================================================
+                 TITLE
+            =================================================== -->
+
+            <div class="mb-3">
+
+                {{ form.title.label(
+                    class="form-label fw-semibold"
+                ) }}
+
+                {{ form.title(
+                    class="form-control",
+                    placeholder="Enter event title"
+                ) }}
+
+                {% for error in form.title.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 DESCRIPTION
+            =================================================== -->
+
+            <div class="mb-3">
+
+                {{ form.description.label(
+                    class="form-label fw-semibold"
+                ) }}
+
+                {{ form.description(
+                    class="form-control",
+                    rows="6",
+                    placeholder="Enter event description"
+                ) }}
+
+                {% for error in form.description.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 VENUE / ORGANIZER
+            =================================================== -->
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    {{ form.venue.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.venue(
+                        class="form-control",
+                        placeholder="Event venue"
+                    ) }}
+
+                    {% for error in form.venue.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    {{ form.organizer.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.organizer(
+                        class="form-control",
+                        placeholder="Event organizer"
+                    ) }}
+
+                    {% for error in form.organizer.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 DATES
+            =================================================== -->
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    {{ form.start_date.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.start_date(
+                        class="form-control",
+                        type="date"
+                    ) }}
+
+                    {% for error in form.start_date.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    {{ form.end_date.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.end_date(
+                        class="form-control",
+                        type="date"
+                    ) }}
+
+                    {% for error in form.end_date.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 TIMES
+            =================================================== -->
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    {{ form.start_time.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.start_time(
+                        class="form-control",
+                        type="time"
+                    ) }}
+
+                    {% for error in form.start_time.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    {{ form.end_time.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.end_time(
+                        class="form-control",
+                        type="time"
+                    ) }}
+
+                    {% for error in form.end_time.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 REGISTRATION LINK
+            =================================================== -->
+
+            <div class="mb-3">
+
+                {{ form.registration_link.label(
+                    class="form-label fw-semibold"
+                ) }}
+
+                {{ form.registration_link(
+                    class="form-control",
+                    placeholder="https://example.com/register"
+                ) }}
+
+                <div class="form-text">
+
+                    Optional registration or booking link.
+
+                </div>
+
+
+                {% for error in form.registration_link.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 FEATURED IMAGE
+            =================================================== -->
+
+            <div class="mb-3">
+
+                {{ form.featured_image.label(
+                    class="form-label fw-semibold"
+                ) }}
+
+                {{ form.featured_image(
+                    class="form-control"
+                ) }}
+
+                <div class="form-text">
+
+                    JPG, JPEG, PNG or WEBP.
+
+                </div>
+
+
+                {% if event and event.featured_image %}
+
+                    <div class="mt-3">
+
+                        <p class="small text-muted mb-2">
+                            Current image:
+                        </p>
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/events/' ~ event.featured_image
+                            ) }}"
+                            alt="{{ event.title }}"
+                            class="rounded border"
+                            style="
+                                width: 220px;
+                                height: 130px;
+                                object-fit: cover;
+                            "
+                        >
+
+                    </div>
+
+                {% endif %}
+
+
+                {% for error in form.featured_image.errors %}
+
+                    <div class="text-danger small mt-1">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 OPTIONS
+            =================================================== -->
+
+            <div class="row">
+
+                <!-- FEATURED -->
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="form-check">
+
+                        {{ form.is_featured(
+                            class="form-check-input"
+                        ) }}
+
+                        {{ form.is_featured.label(
+                            class="form-check-label fw-semibold"
+                        ) }}
+
+                    </div>
+
+                    <div class="form-text">
+
+                        Show this event as featured.
+
+                    </div>
+
+                    {% for error in form.is_featured.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- PUBLISHED -->
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="form-check">
+
+                        {{ form.is_published(
+                            class="form-check-input"
+                        ) }}
+
+                        {{ form.is_published.label(
+                            class="form-check-label fw-semibold"
+                        ) }}
+
+                    </div>
+
+                    <div class="form-text">
+
+                        Make this event visible publicly.
+
+                    </div>
+
+                    {% for error in form.is_published.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- DISPLAY ORDER -->
+
+                <div class="col-md-4 mb-3">
+
+                    {{ form.display_order.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.display_order(
+                        class="form-control",
+                        min="1"
+                    ) }}
+
+                    {% for error in form.display_order.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 FORM ACTIONS
+            =================================================== -->
+
+            <div class="mt-4 pt-3 border-top">
+
+                {{ form.submit(
+                    class="btn btn-primary px-4"
+                ) }}
+
+
+                <a
+                    href="{{ url_for('events.index') }}"
+                    class="btn btn-secondary ms-2"
+                >
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

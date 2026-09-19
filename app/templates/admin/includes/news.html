@@ -1,0 +1,123 @@
+<!-- ==========================
+     Latest News Section
+=========================== -->
+
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="section-subtitle">
+                Latest News
+            </span>
+
+            <h2 class="section-title">
+                Recent Updates
+            </h2>
+
+            <p class="text-muted">
+                Stay informed with the latest news and announcements.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            {% if latest_news %}
+
+                {% for item in latest_news %}
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card h-100 shadow-sm border-0 news-card">
+
+                        {% if item.featured_image %}
+
+                        <img src="{{ url_for('static', filename='uploads/news/' ~ item.featured_image) }}"
+                             class="card-img-top"
+                             alt="{{ item.title }}">
+
+                        {% else %}
+
+                        <img src="{{ url_for('static', filename='images/news-placeholder.jpg') }}"
+                             class="card-img-top"
+                             alt="News">
+
+                        {% endif %}
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+
+                                <i class="fas fa-calendar-alt me-1"></i>
+
+                                {{ item.created_at.strftime('%d %b %Y') if item.created_at else '' }}
+
+                            </small>
+
+                            <h5 class="card-title mt-2">
+
+                                {{ item.title }}
+
+                            </h5>
+
+                            <p class="card-text text-muted">
+
+                                {% if item.summary %}
+                                    {{ item.summary[:120] }}...
+                                {% elif item.content %}
+                                    {{ item.content|striptags|truncate(120) }}
+                                {% endif %}
+
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer bg-white border-0">
+
+                            <a href="{{ url_for('main.news_detail', slug=item.slug) }}"
+                               class="btn btn-outline-primary">
+
+                                Read More
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="col-12 text-center py-5">
+
+                    <h5>No news has been published yet.</h5>
+
+                    <p class="text-muted">
+                        Check back later for updates.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="text-center mt-5">
+
+            <a href="{{ url_for('main.news') }}"
+               class="btn btn-primary">
+
+                View All News
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>

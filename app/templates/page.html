@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ page.title }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+<div class="container">
+
+    {% if page.featured_image %}
+
+        <img
+            src="{{ url_for('static',
+            filename='uploads/pages/' + page.featured_image) }}"
+            class="img-fluid rounded shadow mb-4">
+
+    {% endif %}
+
+    <h1 class="fw-bold mb-4">
+
+        {{ page.title }}
+
+    </h1>
+
+    <div>
+
+        {{ page.content|safe }}
+
+    </div>
+
+</div>
+
+</section>
+
+{% endblock %}

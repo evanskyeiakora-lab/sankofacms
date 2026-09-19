@@ -1,0 +1,746 @@
+<div class="card shadow-sm border-0">
+
+    <!-- ======================================================
+         CARD HEADER
+    ======================================================= -->
+
+    <div class="card-header bg-white py-3">
+
+        <h5 class="mb-0">
+
+            <i class="fas fa-images text-success me-2"></i>
+
+            {{ form_title }}
+
+        </h5>
+
+    </div>
+
+
+    <!-- ======================================================
+         CARD BODY
+    ======================================================= -->
+
+    <div class="card-body">
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {{ form.hidden_tag() }}
+
+
+            <!-- ==================================================
+                 TITLE
+            =================================================== -->
+
+            <div class="mb-4">
+
+                {{ form.title.label(
+                    class="form-label fw-semibold"
+                ) }}
+
+                {{ form.title(
+                    class="form-control form-control-lg",
+                    placeholder="Enter gallery image title"
+                ) }}
+
+                {% for error in form.title.errors %}
+
+                    <div class="text-danger small mt-1">
+
+                        <i class="fas fa-exclamation-circle me-1"></i>
+
+                        {{ error }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 DESCRIPTION
+            =================================================== -->
+
+            <div class="mb-4">
+
+                {{ form.description.label(
+                    class="form-label fw-semibold"
+                ) }}
+
+                {{ form.description(
+                    class="form-control",
+                    rows="5",
+                    placeholder="Describe this photo..."
+                ) }}
+
+                <div class="form-text">
+
+                    Optional. Maximum 5000 characters.
+
+                </div>
+
+                {% for error in form.description.errors %}
+
+                    <div class="text-danger small mt-1">
+
+                        <i class="fas fa-exclamation-circle me-1"></i>
+
+                        {{ error }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 CURRENT IMAGE
+            =================================================== -->
+
+            {% if gallery and gallery.image %}
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+
+                        Current Image
+
+                    </label>
+
+                    <div class="current-gallery-image">
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/gallery/' ~ gallery.image
+                            ) }}"
+                            alt="{{ gallery.title }}"
+                        >
+
+                        <div class="current-image-overlay">
+
+                            <span>
+
+                                <i class="fas fa-check-circle me-1"></i>
+
+                                Current Image
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ==================================================
+                 REPLACE IMAGE
+            =================================================== -->
+
+            <div class="mb-4">
+
+                {{ form.image.label(
+                    class="form-label fw-semibold"
+                ) }}
+
+                <div class="gallery-upload-area">
+
+                    <div class="gallery-upload-icon">
+
+                        <i class="fas fa-sync-alt"></i>
+
+                    </div>
+
+                    <h6 class="mb-1">
+
+                        Replace Image
+
+                    </h6>
+
+                    <p class="text-muted small mb-3">
+
+                        Leave this empty to keep the current image.
+
+                    </p>
+
+                    {{ form.image(
+                        class="form-control",
+                        id="galleryImage"
+                    ) }}
+
+                </div>
+
+
+                <!-- NEW IMAGE PREVIEW -->
+
+                <div
+                    id="imagePreviewContainer"
+                    class="mt-3 d-none"
+                >
+
+                    <p class="small text-muted mb-2">
+
+                        New Image Preview
+
+                    </p>
+
+                    <div class="gallery-preview-wrapper">
+
+                        <img
+                            id="imagePreview"
+                            src=""
+                            alt="New Image Preview"
+                            class="gallery-preview"
+                        >
+
+                        <div class="preview-label">
+
+                            <i class="fas fa-sync-alt me-1"></i>
+
+                            New image will replace the current image
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% for error in form.image.errors %}
+
+                    <div class="text-danger small mt-1">
+
+                        <i class="fas fa-exclamation-circle me-1"></i>
+
+                        {{ error }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 CATEGORY / DISPLAY ORDER
+            =================================================== -->
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+
+                    {{ form.category.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.category(
+                        class="form-select"
+                    ) }}
+
+                    {% for error in form.category.errors %}
+
+                        <div class="text-danger small mt-1">
+
+                            <i class="fas fa-exclamation-circle me-1"></i>
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="col-md-6 mb-4">
+
+                    {{ form.display_order.label(
+                        class="form-label fw-semibold"
+                    ) }}
+
+                    {{ form.display_order(
+                        class="form-control",
+                        min="0"
+                    ) }}
+
+                    <div class="form-text">
+
+                        Lower numbers appear first.
+
+                    </div>
+
+                    {% for error in form.display_order.errors %}
+
+                        <div class="text-danger small mt-1">
+
+                            <i class="fas fa-exclamation-circle me-1"></i>
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 OPTIONS
+            =================================================== -->
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+
+                    <div class="gallery-option-card">
+
+                        <div class="form-check">
+
+                            {{ form.is_featured(
+                                class="form-check-input"
+                            ) }}
+
+                            {{ form.is_featured.label(
+                                class="form-check-label fw-semibold"
+                            ) }}
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            Featured images can receive special
+                            placement on the website.
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 mb-4">
+
+                    <div class="gallery-option-card">
+
+                        <div class="form-check">
+
+                            {{ form.is_published(
+                                class="form-check-input"
+                            ) }}
+
+                            {{ form.is_published.label(
+                                class="form-check-label fw-semibold"
+                            ) }}
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            Published images are visible to
+                            website visitors.
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 FORM ACTIONS
+            =================================================== -->
+
+            <div class="border-top pt-4 mt-2">
+
+                {{ form.submit(
+                    class="btn btn-success px-4"
+                ) }}
+
+                <a
+                    href="{{ url_for('gallery.index') }}"
+                    class="btn btn-secondary ms-2 px-4"
+                >
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================================
+     GALLERY EDIT CSS
+=========================================================== -->
+
+<style>
+
+.gallery-upload-area {
+
+    padding: 30px;
+
+    text-align: center;
+
+    background: #f8faf9;
+
+    border: 2px dashed #cfe5d8;
+
+    border-radius: 12px;
+
+    transition: all 0.25s ease;
+
+}
+
+
+.gallery-upload-area:hover {
+
+    border-color: #198754;
+
+    background: #f3faf6;
+
+}
+
+
+.gallery-upload-icon {
+
+    width: 60px;
+
+    height: 60px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8f5ee;
+
+    color: #198754;
+
+    font-size: 24px;
+
+}
+
+
+.gallery-upload-area .form-control {
+
+    max-width: 500px;
+
+    margin: 0 auto;
+
+    text-align: left;
+
+}
+
+
+/* ==========================================================
+   CURRENT IMAGE
+========================================================== */
+
+.current-gallery-image {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 650px;
+
+    height: 350px;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background: #f1f3f5;
+
+    border: 1px solid #dee2e6;
+
+}
+
+
+.current-gallery-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+.current-image-overlay {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    padding: 12px 16px;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0, 0, 0, 0.75)
+        );
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+/* ==========================================================
+   NEW IMAGE PREVIEW
+========================================================== */
+
+.gallery-preview-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 650px;
+
+    height: 350px;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    border: 2px solid #198754;
+
+    background: #f8f9fa;
+
+}
+
+
+.gallery-preview {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+.preview-label {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    padding: 12px 16px;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(25, 135, 84, 0.9)
+        );
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* ==========================================================
+   OPTIONS
+========================================================== */
+
+.gallery-option-card {
+
+    padding: 18px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+}
+
+
+.gallery-option-card small {
+
+    display: block;
+
+    margin-top: 7px;
+
+    margin-left: 24px;
+
+    line-height: 1.5;
+
+}
+
+
+.form-check-input:checked {
+
+    background-color: #198754;
+
+    border-color: #198754;
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 767px) {
+
+    .gallery-upload-area {
+
+        padding: 22px 15px;
+
+    }
+
+
+    .current-gallery-image,
+    .gallery-preview-wrapper {
+
+        height: 250px;
+
+    }
+
+}
+
+</style>
+
+
+<!-- ==========================================================
+     IMAGE PREVIEW JAVASCRIPT
+=========================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const input =
+            document.getElementById(
+                "galleryImage"
+            );
+
+        const preview =
+            document.getElementById(
+                "imagePreview"
+            );
+
+        const container =
+            document.getElementById(
+                "imagePreviewContainer"
+            );
+
+
+        if (!input) {
+            return;
+        }
+
+
+        input.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    this.files &&
+                    this.files[0];
+
+
+                if (!file) {
+
+                    container.classList.add(
+                        "d-none"
+                    );
+
+                    preview.src = "";
+
+                    return;
+                }
+
+
+                if (
+                    !file.type.startsWith(
+                        "image/"
+                    )
+                ) {
+
+                    container.classList.add(
+                        "d-none"
+                    );
+
+                    preview.src = "";
+
+                    return;
+                }
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function (event) {
+
+                        preview.src =
+                            event.target.result;
+
+                        container.classList.remove(
+                            "d-none"
+                        );
+
+                    };
+
+
+                reader.readAsDataURL(
+                    file
+                );
+
+            }
+        );
+
+    }
+);
+
+</script>

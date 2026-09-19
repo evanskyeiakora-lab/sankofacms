@@ -1,0 +1,19 @@
+{% if status == "published" %}
+
+<span class="badge bg-success">
+    Published
+</span>
+
+{% elif status == "draft" %}
+
+<span class="badge bg-secondary">
+    Draft
+</span>
+
+{% else %}
+
+<span class="badge bg-warning">
+    {{ status }}
+</span>
+
+{% endif %}

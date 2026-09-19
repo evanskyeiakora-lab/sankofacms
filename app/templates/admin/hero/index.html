@@ -1,0 +1,658 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+Hero Slides
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ==================================================
+         PAGE HEADER
+    =================================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="mb-1">
+
+                <i class="fas fa-images me-2"></i>
+
+                Hero Slides
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Manage homepage hero slider content.
+
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('hero.create') }}"
+            class="btn btn-primary"
+        >
+
+            <i class="fas fa-plus me-2"></i>
+
+            Add New Slide
+
+        </a>
+
+    </div>
+
+
+    <!-- ==================================================
+         STATISTICS
+    =================================================== -->
+
+    <div class="row mb-4">
+
+        <!-- Total Slides -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="text-muted small">
+
+                        <i class="fas fa-images me-1"></i>
+
+                        Total Slides
+
+                    </div>
+
+                    <h3 class="mb-0 mt-2">
+
+                        {{ slides.total }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Current Page -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="text-muted small">
+
+                        <i class="fas fa-file-alt me-1"></i>
+
+                        Current Page
+
+                    </div>
+
+                    <h3 class="mb-0 mt-2">
+
+                        {{ slides.page }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Pages -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="text-muted small">
+
+                        <i class="fas fa-copy me-1"></i>
+
+                        Total Pages
+
+                    </div>
+
+                    <h3 class="mb-0 mt-2">
+
+                        {{ slides.pages }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         HERO SLIDES CARD
+    =================================================== -->
+
+    <div class="card shadow-sm border-0">
+
+        <!-- Card Header -->
+
+        <div class="card-header bg-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+
+                    <i class="fas fa-list me-2"></i>
+
+                    All Hero Slides
+
+                </h5>
+
+
+                <span class="badge bg-primary">
+
+                    {{ slides.total }}
+
+                    {% if slides.total == 1 %}
+                        Slide
+                    {% else %}
+                        Slides
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Card Body -->
+
+        <div class="card-body p-0">
+
+
+            {% if slides.items %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th style="width: 90px;">
+                                Image
+                            </th>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Subtitle
+                            </th>
+
+                            <th style="width: 120px;">
+                                Status
+                            </th>
+
+                            <th style="width: 80px;">
+                                Order
+                            </th>
+
+                            <th
+                                class="text-end"
+                                style="width: 150px;"
+                            >
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for slide in slides.items %}
+
+                        <tr>
+
+                            <!-- ==================================
+                                 IMAGE
+                            =================================== -->
+
+                            <td>
+
+                                {% if slide.image %}
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='uploads/hero/' ~ slide.image
+                                        ) }}"
+                                        alt="{{ slide.title }}"
+                                        class="img-thumbnail"
+                                        style="
+                                            width: 75px;
+                                            height: 55px;
+                                            object-fit: cover;
+                                        "
+                                    >
+
+                                {% else %}
+
+                                    <div
+                                        class="bg-light border rounded d-flex align-items-center justify-content-center"
+                                        style="
+                                            width: 75px;
+                                            height: 55px;
+                                        "
+                                    >
+
+                                        <i
+                                            class="fas fa-image text-muted"
+                                        ></i>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- ==================================
+                                 TITLE
+                            =================================== -->
+
+                            <td>
+
+                                <strong>
+
+                                    {{ slide.title }}
+
+                                </strong>
+
+                            </td>
+
+
+                            <!-- ==================================
+                                 SUBTITLE
+                            =================================== -->
+
+                            <td>
+
+                                {% if slide.subtitle %}
+
+                                    {{ slide.subtitle[:80] }}
+
+                                    {% if slide.subtitle|length > 80 %}
+
+                                        ...
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="text-muted">
+
+                                        No subtitle
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- ==================================
+                                 STATUS
+                            =================================== -->
+
+                            <td>
+
+                                {% if slide.is_active %}
+
+                                    <span class="badge bg-success">
+
+                                        <i
+                                            class="fas fa-check-circle me-1"
+                                        ></i>
+
+                                        Active
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+
+                                        <i
+                                            class="fas fa-pause-circle me-1"
+                                        ></i>
+
+                                        Inactive
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- ==================================
+                                 DISPLAY ORDER
+                            =================================== -->
+
+                            <td>
+
+                                <span
+                                    class="badge bg-light text-dark border"
+                                >
+
+                                    {{ slide.display_order }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- ==================================
+                                 ACTIONS
+                            =================================== -->
+
+                            <td class="text-end">
+
+                                <!-- EDIT BUTTON -->
+
+                                <a
+                                    href="{{ url_for(
+                                        'hero.edit',
+                                        id=slide.id
+                                    ) }}"
+                                    class="btn btn-sm btn-warning"
+                                    title="Edit Slide"
+                                >
+
+                                    <i class="fas fa-edit"></i>
+
+                                </a>
+
+
+                                <!-- DELETE BUTTON -->
+
+                                <form
+                                    action="{{ url_for(
+                                        'hero.delete_slide',
+                                        id=slide.id
+                                    ) }}"
+                                    method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm(
+                                        'Are you sure you want to delete this slide?'
+                                    );"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-danger"
+                                        title="Delete Slide"
+                                    >
+
+                                        <i class="fas fa-trash"></i>
+
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <!-- ==================================================
+                 EMPTY STATE
+            =================================================== -->
+
+            <div class="text-center py-5">
+
+                <div class="mb-3">
+
+                    <i
+                        class="fas fa-images text-muted"
+                        style="font-size: 4rem;"
+                    ></i>
+
+                </div>
+
+
+                <h4>
+
+                    No Hero Slides Found
+
+                </h4>
+
+
+                <p class="text-muted">
+
+                    Create your first homepage hero slide.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('hero.create') }}"
+                    class="btn btn-primary"
+                >
+
+                    <i class="fas fa-plus me-2"></i>
+
+                    Add New Slide
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         PAGINATION
+    =================================================== -->
+
+    {% if slides.pages > 1 %}
+
+    <nav
+        class="mt-4"
+        aria-label="Hero slide pagination"
+    >
+
+        <ul class="pagination justify-content-center">
+
+
+            <!-- Previous -->
+
+            {% if slides.has_prev %}
+
+                <li class="page-item">
+
+                    <a
+                        class="page-link"
+                        href="{{ url_for(
+                            'hero.index',
+                            page=slides.prev_num
+                        ) }}"
+                    >
+
+                        <i
+                            class="fas fa-chevron-left me-1"
+                        ></i>
+
+                        Previous
+
+                    </a>
+
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+
+                        <i
+                            class="fas fa-chevron-left me-1"
+                        ></i>
+
+                        Previous
+
+                    </span>
+
+                </li>
+
+            {% endif %}
+
+
+            <!-- Page Numbers -->
+
+            {% for page_num in slides.iter_pages(
+                left_edge=1,
+                right_edge=1,
+                left_current=2,
+                right_current=2
+            ) %}
+
+                {% if page_num %}
+
+                    {% if page_num == slides.page %}
+
+                        <li class="page-item active">
+
+                            <span class="page-link">
+
+                                {{ page_num }}
+
+                            </span>
+
+                        </li>
+
+                    {% else %}
+
+                        <li class="page-item">
+
+                            <a
+                                class="page-link"
+                                href="{{ url_for(
+                                    'hero.index',
+                                    page=page_num
+                                ) }}"
+                            >
+
+                                {{ page_num }}
+
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <li class="page-item disabled">
+
+                        <span class="page-link">
+
+                            …
+
+                        </span>
+
+                    </li>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            <!-- Next -->
+
+            {% if slides.has_next %}
+
+                <li class="page-item">
+
+                    <a
+                        class="page-link"
+                        href="{{ url_for(
+                            'hero.index',
+                            page=slides.next_num
+                        ) }}"
+                    >
+
+                        Next
+
+                        <i
+                            class="fas fa-chevron-right ms-1"
+                        ></i>
+
+                    </a>
+
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+
+                        Next
+
+                        <i
+                            class="fas fa-chevron-right ms-1"
+                        ></i>
+
+                    </span>
+
+                </li>
+
+            {% endif %}
+
+
+        </ul>
+
+    </nav>
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

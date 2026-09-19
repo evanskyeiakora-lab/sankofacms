@@ -1,0 +1,126 @@
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.first_name.label(class="form-label") }}
+
+                {{ form.first_name(class="form-control") }}
+
+                {% for error in form.first_name.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.last_name.label(class="form-label") }}
+
+                {{ form.last_name(class="form-control") }}
+
+                {% for error in form.last_name.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.username.label(class="form-label") }}
+
+                {{ form.username(class="form-control") }}
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.email.label(class="form-label") }}
+
+                {{ form.email(class="form-control") }}
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.phone.label(class="form-label") }}
+
+                {{ form.phone(class="form-control") }}
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.role.label(class="form-label") }}
+
+                {{ form.role(class="form-select") }}
+
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            {{ form.photo.label(class="form-label") }}
+
+            {{ form.photo(class="form-control") }}
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.password.label(class="form-label") }}
+
+                {{ form.password(class="form-control") }}
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                {{ form.confirm_password.label(class="form-label") }}
+
+                {{ form.confirm_password(class="form-control") }}
+
+            </div>
+
+        </div>
+
+        <div class="form-check mb-4">
+
+            {{ form.is_active(class="form-check-input") }}
+
+            {{ form.is_active.label(class="form-check-label") }}
+
+        </div>
+
+        {{ form.hidden_tag() }}
+
+        <div class="d-flex gap-2">
+
+            {{ form.submit(class="btn btn-primary") }}
+
+            <a href="{{ url_for('users.index') }}"
+               class="btn btn-outline-secondary">
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

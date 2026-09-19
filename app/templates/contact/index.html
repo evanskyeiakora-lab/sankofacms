@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Contact Details -->
+            <div class="col-lg-5 mb-4">
+
+                <h2 class="mb-4">Get In Touch</h2>
+
+                {% if settings and settings.about %}
+                <p class="text-muted">
+                    {{ settings.about }}
+                </p>
+                {% endif %}
+
+                <div class="mb-3">
+                    <h5><i class="fas fa-map-marker-alt text-primary me-2"></i>Address</h5>
+                    <p>{{ settings.address if settings else "" }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <h5><i class="fas fa-phone text-primary me-2"></i>Phone</h5>
+                    <p>{{ settings.phone if settings else "" }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <h5><i class="fas fa-envelope text-primary me-2"></i>Email</h5>
+                    <p>{{ settings.email if settings else "" }}</p>
+                </div>
+
+            </div>
+
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+                        <h4 class="mb-0">Send Us a Message</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form method="POST">
+
+                            {{ form.hidden_tag() }}
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    {{ form.name.label(class="form-label") }}
+                                    {{ form.name(class="form-control") }}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    {{ form.email.label(class="form-label") }}
+                                    {{ form.email(class="form-control") }}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    {{ form.phone.label(class="form-label") }}
+                                    {{ form.phone(class="form-control") }}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    {{ form.subject.label(class="form-label") }}
+                                    {{ form.subject(class="form-control") }}
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    {{ form.message.label(class="form-label") }}
+                                    {{ form.message(class="form-control", rows="6") }}
+                                </div>
+
+                            </div>
+
+                            {{ form.submit(class="btn btn-primary") }}
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% if settings and settings.google_map %}
+        <div class="mt-5">
+            {{ settings.google_map|safe }}
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

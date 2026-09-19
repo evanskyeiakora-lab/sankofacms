@@ -1,0 +1,466 @@
+<!-- ====================================================== -->
+<!-- SIDEBAR HEADER -->
+<!-- ====================================================== -->
+
+<div class="sidebar-header">
+
+    <a
+        href="{{ url_for('admin.dashboard') }}"
+        class="brand"
+    >
+
+        <img
+            src="{{ url_for(
+                'static',
+                filename='images/logo.png'
+            ) }}"
+            alt="Apex CMS Logo"
+            class="brand-logo"
+        >
+
+        <div class="brand-text">
+
+            <h4>
+                Apex CMS
+            </h4>
+
+            <small>
+                Administration
+            </small>
+
+        </div>
+
+    </a>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- SIDEBAR NAVIGATION -->
+<!-- ====================================================== -->
+
+<nav class="sidebar-nav">
+
+    <ul>
+
+
+        <!-- ================================================== -->
+        <!-- MAIN -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator"
+        ] %}
+
+        <li class="nav-title">
+
+            MAIN
+
+        </li>
+
+
+        <!-- DASHBOARD -->
+
+        <li>
+
+            <a
+                href="{{ url_for('admin.dashboard') }}"
+                class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}"
+            >
+
+                <i class="fas fa-gauge-high"></i>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- CONTENT -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Editor",
+            "Author"
+        ] %}
+
+        <li class="nav-title">
+
+            CONTENT
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- HERO SLIDER -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Editor"
+        ] %}
+
+        <li>
+
+            <a
+                href="{{ url_for('hero.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('hero.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-images"></i>
+
+                <span>
+                    Hero Slider
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- PAGES -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Editor"
+        ] %}
+
+        <li>
+
+            <a
+                href="{{ url_for('pages.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('pages.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-file-alt"></i>
+
+                <span>
+                    Pages
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- NEWS -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Editor",
+            "Author"
+        ] %}
+
+        <li>
+
+            <a
+                href="{{ url_for('news.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('news.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-newspaper"></i>
+
+                <span>
+                    News
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- EVENTS -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Editor"
+        ] %}
+
+        <li>
+
+            <a
+                href="{{ url_for('events.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('events.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-calendar-days"></i>
+
+                <span>
+                    Events
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- GALLERY -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Editor"
+        ] %}
+
+        <li>
+
+            <a
+                href="{{ url_for('gallery.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('gallery.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-image"></i>
+
+                <span>
+                    Gallery
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- PEOPLE -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Editor"
+        ] %}
+
+        <li class="nav-title">
+
+            PEOPLE
+
+        </li>
+
+
+        <!-- ================================================== -->
+        <!-- MEMBERS -->
+        <!-- ================================================== -->
+
+        <li>
+
+            <a
+                href="{{ url_for('members.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('members.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-users"></i>
+
+                <span>
+                    Members
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- ================================================== -->
+        <!-- MEMBERSHIP APPLICATIONS -->
+        <!-- ================================================== -->
+
+        <li>
+
+            <a
+                href="{{ url_for('admin.membership_applications') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('admin.membership_application') %}active{% endif %}"
+            >
+
+                <i class="fas fa-file-signature"></i>
+
+                <span>
+                    Applications
+                </span>
+
+
+                <!-- Pending Applications Badge -->
+
+                {% if pending_applications_count > 0 %}
+
+                    <span
+                        class="badge bg-danger ms-auto"
+                    >
+
+                        {{ pending_applications_count }}
+
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- COMMUNICATION -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator",
+            "Moderator"
+        ] %}
+
+        <li class="nav-title">
+
+            COMMUNICATION
+
+        </li>
+
+
+        <!-- ================================================== -->
+        <!-- CONTACT MESSAGES -->
+        <!-- ================================================== -->
+
+        <li>
+
+            <a
+                href="{{ url_for('contact.admin_index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('contact.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-envelope"></i>
+
+                <span>
+                    Messages
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- SYSTEM -->
+        <!-- ================================================== -->
+
+        {% if current_user.role in [
+            "Super Admin",
+            "Administrator"
+        ] %}
+
+        <li class="nav-title">
+
+            SYSTEM
+
+        </li>
+
+
+        <!-- ================================================== -->
+        <!-- USERS -->
+        <!-- ================================================== -->
+
+        <li>
+
+            <a
+                href="{{ url_for('users.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('users.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-user-shield"></i>
+
+                <span>
+                    Users
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- SETTINGS -->
+        <!-- Super Admin ONLY -->
+        <!-- ================================================== -->
+
+        {% if current_user.role == "Super Admin" %}
+
+        <li>
+
+            <a
+                href="{{ url_for('settings.index') }}"
+                class="{% if request.endpoint and request.endpoint.startswith('settings.') %}active{% endif %}"
+            >
+
+                <i class="fas fa-gear"></i>
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+    </ul>
+
+</nav>
+
+
+<!-- ====================================================== -->
+<!-- SIDEBAR FOOTER -->
+<!-- ====================================================== -->
+
+<div class="sidebar-footer">
+
+    <a
+        href="{{ url_for('auth.logout') }}"
+        class="logout-link"
+    >
+
+        <i class="fas fa-right-from-bracket"></i>
+
+        <span>
+            Logout
+        </span>
+
+    </a>
+
+</div>

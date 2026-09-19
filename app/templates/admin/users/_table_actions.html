@@ -1,0 +1,33 @@
+<div class="btn-group btn-group-sm">
+
+    <a
+        href="{{ view_url }}"
+        class="btn btn-outline-info">
+
+        <i class="fas fa-eye"></i>
+
+    </a>
+
+    <a
+        href="{{ edit_url }}"
+        class="btn btn-outline-primary">
+
+        <i class="fas fa-edit"></i>
+
+    </a>
+
+    <form
+        method="POST"
+        action="{{ delete_url }}"
+        class="d-inline">
+
+        <button
+            class="btn btn-outline-danger">
+
+            <i class="fas fa-trash"></i>
+
+        </button>
+
+    </form>
+
+</div>

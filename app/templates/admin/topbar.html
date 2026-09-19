@@ -1,0 +1,16 @@
+<nav class="navbar navbar-light bg-white shadow-sm px-4">
+
+    <h5 class="mb-0">
+        Apex Citizens of Ghana CMS
+    </h5>
+
+    <div>
+
+        {% if current_user.is_authenticated %}
+            Welcome,
+            <strong>{{ current_user.username }}</strong>
+        {% endif %}
+
+    </div>
+
+</nav>

@@ -1,0 +1,819 @@
+{% extends "public/base.html" %}
+
+{% block title %}
+{{ gallery.title }} | Apex Citizens of Ghana
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================================
+     GALLERY DETAIL HERO
+========================================================= -->
+
+<section class="gallery-detail-section">
+
+    <div class="container">
+
+        <!-- =================================================
+             BREADCRUMB
+        ================================================== -->
+
+        <div class="gallery-breadcrumb">
+
+            <a href="{{ url_for('main.home') }}">
+                Home
+            </a>
+
+            <i class="fas fa-chevron-right"></i>
+
+            <a href="{{ url_for('main.gallery') }}">
+                Gallery
+            </a>
+
+            <i class="fas fa-chevron-right"></i>
+
+            <span>
+                {{ gallery.title }}
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <div class="row g-5 align-items-start">
+
+            <!-- =================================================
+                 IMAGE
+            ================================================== -->
+
+            <div
+                class="col-lg-8"
+                data-aos="fade-right"
+            >
+
+                <div class="gallery-detail-image-wrapper">
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename=gallery.image_url
+                        ) }}"
+                        alt="{{ gallery.title }}"
+                        class="gallery-detail-image"
+                    >
+
+
+                    {% if gallery.is_featured %}
+
+                    <div class="gallery-detail-featured">
+
+                        <i class="fas fa-star"></i>
+
+                        Featured
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 INFORMATION
+            ================================================== -->
+
+            <div
+                class="col-lg-4"
+                data-aos="fade-left"
+            >
+
+                <!-- CATEGORY -->
+
+                <div class="gallery-detail-category">
+
+                    <i class="fas fa-folder"></i>
+
+                    {{ gallery.category }}
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <h1 class="gallery-detail-title">
+
+                    {{ gallery.title }}
+
+                </h1>
+
+
+                <!-- DESCRIPTION -->
+
+                {% if gallery.description %}
+
+                <div class="gallery-detail-description">
+
+                    {{ gallery.description }}
+
+                </div>
+
+                {% else %}
+
+                <div class="gallery-detail-description">
+
+                    <p>
+                        Discover this special moment from
+                        Apex Citizens of Ghana.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- DATE -->
+
+                {% if gallery.created_at %}
+
+                <div class="gallery-detail-meta">
+
+                    <div class="gallery-meta-item">
+
+                        <div class="gallery-meta-icon">
+
+                            <i class="fas fa-calendar-alt"></i>
+
+                        </div>
+
+                        <div>
+
+                            <small>
+                                Added to Gallery
+                            </small>
+
+                            <strong>
+                                {{ gallery.created_at.strftime('%d %B %Y') }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- ACTIONS -->
+
+                <div class="gallery-detail-actions">
+
+                    <a
+                        href="{{ url_for('main.gallery') }}"
+                        class="gallery-back-btn"
+                    >
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Back to Gallery
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RELATED / NAVIGATION
+========================================================= -->
+
+<section class="gallery-detail-footer">
+
+    <div class="container">
+
+        <div class="gallery-footer-inner">
+
+            <div>
+
+                <span class="gallery-footer-label">
+                    APEX CITIZENS OF GHANA
+                </span>
+
+                <h2>
+                    Explore More Moments
+                </h2>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('main.gallery') }}"
+                class="gallery-explore-btn"
+            >
+
+                View Full Gallery
+
+                <i class="fas fa-images ms-2"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     GALLERY DETAIL CSS
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.gallery-detail-section {
+
+    padding: 45px 0 90px;
+
+    background: #ffffff;
+
+}
+
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+.gallery-breadcrumb {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 35px;
+
+    color: #7b8794;
+
+    font-size: 14px;
+
+}
+
+
+.gallery-breadcrumb a {
+
+    color: #198754;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+
+.gallery-breadcrumb a:hover {
+
+    color: #146c43;
+
+}
+
+
+.gallery-breadcrumb i {
+
+    color: #adb5bd;
+
+    font-size: 10px;
+
+}
+
+
+.gallery-breadcrumb span {
+
+    color: #6c757d;
+
+}
+
+
+/* =========================================================
+   IMAGE WRAPPER
+========================================================= */
+
+.gallery-detail-image-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #f3f5f4;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.12);
+
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.gallery-detail-image {
+
+    display: block;
+
+    width: 100%;
+
+    max-height: 650px;
+
+    object-fit: cover;
+
+}
+
+
+/* =========================================================
+   FEATURED BADGE
+========================================================= */
+
+.gallery-detail-featured {
+
+    position: absolute;
+
+    top: 20px;
+
+    left: 20px;
+
+    padding: 9px 14px;
+
+    background: #ffc107;
+
+    color: #212529;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.gallery-detail-category {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 15px;
+
+    color: #198754;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+}
+
+
+.gallery-detail-category i {
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.gallery-detail-title {
+
+    margin: 0 0 22px;
+
+    color: #263b52;
+
+    font-size: clamp(
+        2rem,
+        4vw,
+        3.4rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.gallery-detail-description {
+
+    margin-bottom: 30px;
+
+    color: #667085;
+
+    font-size: 17px;
+
+    line-height: 1.85;
+
+}
+
+
+.gallery-detail-description p {
+
+    margin: 0;
+
+}
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.gallery-detail-meta {
+
+    padding: 20px 0;
+
+    border-top: 1px solid #e9ecef;
+
+    border-bottom: 1px solid #e9ecef;
+
+}
+
+
+.gallery-meta-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+}
+
+
+.gallery-meta-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #eaf6ef;
+
+    color: #198754;
+
+    border-radius: 10px;
+
+}
+
+
+.gallery-meta-item small {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #8993a0;
+
+    font-size: 12px;
+
+}
+
+
+.gallery-meta-item strong {
+
+    display: block;
+
+    color: #263b52;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.gallery-detail-actions {
+
+    margin-top: 30px;
+
+}
+
+
+.gallery-back-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 13px 22px;
+
+    background: #198754;
+
+    color: #ffffff;
+
+    border: 2px solid #198754;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+
+}
+
+
+.gallery-back-btn:hover {
+
+    background: #146c43;
+
+    border-color: #146c43;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(25, 135, 84, 0.20);
+
+}
+
+
+/* =========================================================
+   FOOTER SECTION
+========================================================= */
+
+.gallery-detail-footer {
+
+    padding: 55px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d6b45,
+            #123d2d
+        );
+
+}
+
+
+.gallery-footer-inner {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+}
+
+
+.gallery-footer-label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #ffc107;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.gallery-footer-inner h2 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================================
+   EXPLORE BUTTON
+========================================================= */
+
+.gallery-explore-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 14px 24px;
+
+    background: #ffc107;
+
+    color: #212529;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: all 0.3s ease;
+
+}
+
+
+.gallery-explore-btn:hover {
+
+    background: #ffca2c;
+
+    color: #212529;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .gallery-detail-section {
+
+        padding: 35px 0 70px;
+
+    }
+
+
+    .gallery-detail-image {
+
+        max-height: 550px;
+
+    }
+
+
+    .gallery-footer-inner {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .gallery-detail-section {
+
+        padding: 25px 0 55px;
+
+    }
+
+
+    .gallery-breadcrumb {
+
+        margin-bottom: 25px;
+
+        font-size: 13px;
+
+    }
+
+
+    .gallery-detail-image-wrapper {
+
+        border-radius: 12px;
+
+    }
+
+
+    .gallery-detail-image {
+
+        max-height: 450px;
+
+    }
+
+
+    .gallery-detail-title {
+
+        font-size: 32px;
+
+    }
+
+
+    .gallery-detail-description {
+
+        font-size: 16px;
+
+        line-height: 1.75;
+
+    }
+
+
+    .gallery-detail-featured {
+
+        top: 12px;
+
+        left: 12px;
+
+        padding: 7px 10px;
+
+        font-size: 11px;
+
+    }
+
+
+    .gallery-detail-footer {
+
+        padding: 45px 0;
+
+    }
+
+
+    .gallery-footer-inner h2 {
+
+        font-size: 26px;
+
+    }
+
+
+    .gallery-explore-btn {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

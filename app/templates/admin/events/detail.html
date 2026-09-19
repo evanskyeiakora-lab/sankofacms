@@ -1,0 +1,1423 @@
+{% extends "layouts/public.html" %}
+
+
+{% block title %}
+    {{ event.title }} | Apex Citizens of Ghana
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ==========================================================
+     EVENT DETAIL HERO
+========================================================== -->
+
+<section class="event-detail-hero">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+
+                <div class="event-detail-label">
+                    <i class="fas fa-calendar-alt me-2"></i>
+                    EVENT DETAILS
+                </div>
+
+                <h1 class="event-detail-title">
+                    {{ event.title }}
+                </h1>
+
+                <div class="event-breadcrumb">
+
+                    <a href="{{ url_for('main.home') }}">
+                        Home
+                    </a>
+
+                    <i class="fas fa-chevron-right"></i>
+
+                    <a href="{{ url_for('main.events') }}">
+                        Events
+                    </a>
+
+                    <i class="fas fa-chevron-right"></i>
+
+                    <span>
+                        {{ event.title }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+     EVENT CONTENT
+========================================================== -->
+
+<section class="event-detail-section">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+
+            <!-- ==================================================
+                 MAIN CONTENT
+            =================================================== -->
+
+            <div class="col-lg-8">
+
+
+                <!-- EVENT IMAGE -->
+
+                <div class="event-main-image-wrapper">
+
+                    {% if event.featured_image %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/events/' ~ event.featured_image
+                            ) }}"
+                            alt="{{ event.title }}"
+                            class="event-main-image"
+                        >
+
+                    {% else %}
+
+                        <div class="event-image-placeholder">
+
+                            <i class="fas fa-calendar-alt"></i>
+
+                            <span>
+                                Apex Citizens of Ghana
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- EVENT DESCRIPTION -->
+
+                <div class="event-description-card">
+
+                    <div class="event-section-heading">
+
+                        <span></span>
+
+                        <h2>
+                            About This Event
+                        </h2>
+
+                    </div>
+
+
+                    {% if event.description %}
+
+                        <div class="event-description">
+
+                            {{ event.description | safe }}
+
+                        </div>
+
+                    {% else %}
+
+                        <p class="text-muted">
+
+                            More information about this event
+                            will be available soon.
+
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- REGISTRATION -->
+
+                {% if event.registration_link %}
+
+                    <div class="event-registration-card">
+
+                        <div>
+
+                            <div class="registration-icon">
+
+                                <i class="fas fa-ticket-alt"></i>
+
+                            </div>
+
+                        </div>
+
+                        <div class="registration-content">
+
+                            <h3>
+                                Interested in attending?
+                            </h3>
+
+                            <p>
+                                Register or get more information
+                                about this event.
+                            </p>
+
+                        </div>
+
+                        <div class="registration-action">
+
+                            <a
+                                href="{{ event.registration_link }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="event-register-btn"
+                            >
+
+                                Register Now
+
+                                <i class="fas fa-arrow-right ms-2"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- BACK TO EVENTS -->
+
+                <div class="event-back-link">
+
+                    <a href="{{ url_for('main.events') }}">
+
+                        <i class="fas fa-arrow-left me-2"></i>
+
+                        Back to All Events
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 EVENT SIDEBAR
+            =================================================== -->
+
+            <div class="col-lg-4">
+
+
+                <div class="event-info-card">
+
+                    <div class="event-info-header">
+
+                        <i class="fas fa-info-circle"></i>
+
+                        <h3>
+                            Event Information
+                        </h3>
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div class="event-info-item">
+
+                        <div class="event-info-icon">
+
+                            <i class="fas fa-calendar-day"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Date
+                            </span>
+
+                            <strong>
+
+                                {{ event.start_date.strftime('%d %B %Y') }}
+
+                                {% if event.end_date %}
+
+                                    <small>
+
+                                        to
+                                        {{ event.end_date.strftime('%d %B %Y') }}
+
+                                    </small>
+
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIME -->
+
+                    {% if event.start_time %}
+
+                        <div class="event-info-item">
+
+                            <div class="event-info-icon">
+
+                                <i class="fas fa-clock"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Time
+                                </span>
+
+                                <strong>
+
+                                    {{ event.start_time.strftime('%I:%M %p') }}
+
+                                    {% if event.end_time %}
+
+                                        -
+                                        {{ event.end_time.strftime('%I:%M %p') }}
+
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- VENUE -->
+
+                    {% if event.venue %}
+
+                        <div class="event-info-item">
+
+                            <div class="event-info-icon">
+
+                                <i class="fas fa-map-marker-alt"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Venue
+                                </span>
+
+                                <strong>
+                                    {{ event.venue }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- ORGANIZER -->
+
+                    {% if event.organizer %}
+
+                        <div class="event-info-item">
+
+                            <div class="event-info-icon">
+
+                                <i class="fas fa-user-tie"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Organizer
+                                </span>
+
+                                <strong>
+                                    {{ event.organizer }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- STATUS -->
+
+                    <div class="event-info-item">
+
+                        <div class="event-info-icon">
+
+                            {% if event.start_date >= current_date %}
+
+                                <i class="fas fa-calendar-check"></i>
+
+                            {% else %}
+
+                                <i class="fas fa-calendar-times"></i>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Status
+                            </span>
+
+                            {% if event.start_date >= current_date %}
+
+                                <strong class="status-upcoming">
+                                    Upcoming Event
+                                </strong>
+
+                            {% else %}
+
+                                <strong class="status-past">
+                                    Past Event
+                                </strong>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ==================================================
+                     JOIN COMMUNITY CARD
+                =================================================== -->
+
+                <div class="event-community-card">
+
+                    <div class="community-card-icon">
+
+                        <i class="fas fa-users"></i>
+
+                    </div>
+
+                    <h3>
+                        Be Part of the Movement
+                    </h3>
+
+                    <p>
+                        Join Apex Citizens of Ghana and become
+                        part of a community committed to unity,
+                        leadership, development and active
+                        citizenship.
+                    </p>
+
+                    <a
+                        href="{{ url_for('main.join_us') }}"
+                        class="community-btn"
+                    >
+
+                        Join Us
+
+                        <i class="fas fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+     EVENT DETAIL CSS
+========================================================== -->
+
+<style>
+
+/* ==========================================================
+   HERO
+========================================================== */
+
+.event-detail-hero {
+
+    position: relative;
+
+    padding: 75px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #198754 0%,
+            #146c43 55%,
+            #0f5132 100%
+        );
+
+    color: #ffffff;
+
+    overflow: hidden;
+
+}
+
+
+/* Decorative circle */
+
+.event-detail-hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 360px;
+
+    height: 360px;
+
+    right: -120px;
+
+    top: -170px;
+
+    border: 50px solid rgba(255, 193, 7, 0.12);
+
+    border-radius: 50%;
+
+}
+
+
+/* Label */
+
+.event-detail-label {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+
+    color: #ffc107;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* Title */
+
+.event-detail-title {
+
+    margin: 0 0 25px;
+
+    max-width: 850px;
+
+    color: #ffffff;
+
+    font-size: clamp(
+        2.4rem,
+        5vw,
+        4.5rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.1;
+
+}
+
+
+/* Breadcrumb */
+
+.event-breadcrumb {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    font-size: 14px;
+
+    color: rgba(255,255,255,0.8);
+
+}
+
+
+.event-breadcrumb a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    transition: 0.3s ease;
+
+}
+
+
+.event-breadcrumb a:hover {
+
+    color: #ffc107;
+
+}
+
+
+.event-breadcrumb i {
+
+    font-size: 9px;
+
+    opacity: 0.7;
+
+}
+
+
+/* ==========================================================
+   MAIN SECTION
+========================================================== */
+
+.event-detail-section {
+
+    padding: 80px 0;
+
+    background: #f7f9fb;
+
+}
+
+
+/* ==========================================================
+   MAIN IMAGE
+========================================================== */
+
+.event-main-image-wrapper {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,0.08);
+
+}
+
+
+.event-main-image {
+
+    display: block;
+
+    width: 100%;
+
+    max-height: 560px;
+
+    object-fit: cover;
+
+}
+
+
+/* ==========================================================
+   IMAGE PLACEHOLDER
+========================================================== */
+
+.event-image-placeholder {
+
+    min-height: 450px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eef4f1;
+
+    color: #198754;
+
+}
+
+
+.event-image-placeholder i {
+
+    margin-bottom: 15px;
+
+    font-size: 65px;
+
+}
+
+
+.event-image-placeholder span {
+
+    color: #667085;
+
+    font-size: 15px;
+
+}
+
+
+/* ==========================================================
+   DESCRIPTION CARD
+========================================================== */
+
+.event-description-card {
+
+    margin-top: 35px;
+
+    padding: 35px;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.05);
+
+}
+
+
+/* Section heading */
+
+.event-section-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.event-section-heading span {
+
+    width: 5px;
+
+    height: 30px;
+
+    display: block;
+
+    background: #198754;
+
+    border-radius: 5px;
+
+}
+
+
+.event-section-heading h2 {
+
+    margin: 0;
+
+    color: #263b52;
+
+    font-size: 27px;
+
+    font-weight: 750;
+
+}
+
+
+/* Description */
+
+.event-description {
+
+    color: #667085;
+
+    font-size: 16px;
+
+    line-height: 1.9;
+
+}
+
+
+.event-description p {
+
+    margin-bottom: 18px;
+
+}
+
+
+.event-description p:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.event-description h1,
+.event-description h2,
+.event-description h3,
+.event-description h4 {
+
+    margin-top: 25px;
+
+    margin-bottom: 12px;
+
+    color: #263b52;
+
+}
+
+
+/* ==========================================================
+   REGISTRATION CARD
+========================================================== */
+
+.event-registration-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #198754,
+            #146c43
+        );
+
+    color: #ffffff;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 12px 35px rgba(25,135,84,0.18);
+
+}
+
+
+.registration-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(255,255,255,0.15);
+
+    border-radius: 50%;
+
+    font-size: 21px;
+
+}
+
+
+.registration-content {
+
+    flex: 1;
+
+}
+
+
+.registration-content h3 {
+
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+
+.registration-content p {
+
+    margin: 0;
+
+    color: rgba(255,255,255,0.82);
+
+    font-size: 14px;
+
+}
+
+
+.event-register-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 12px 20px;
+
+    background: #ffc107;
+
+    color: #212529;
+
+    border-radius: 7px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition: all 0.3s ease;
+
+}
+
+
+.event-register-btn:hover {
+
+    background: #ffffff;
+
+    color: #198754;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ==========================================================
+   BACK LINK
+========================================================== */
+
+.event-back-link {
+
+    margin-top: 30px;
+
+}
+
+
+.event-back-link a {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    color: #198754;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.3s ease;
+
+}
+
+
+.event-back-link a:hover {
+
+    color: #146c43;
+
+    transform: translateX(-3px);
+
+}
+
+
+/* ==========================================================
+   EVENT INFORMATION CARD
+========================================================== */
+
+.event-info-card {
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.06);
+
+}
+
+
+/* Header */
+
+.event-info-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 22px 25px;
+
+    background: #198754;
+
+    color: #ffffff;
+
+}
+
+
+.event-info-header i {
+
+    color: #ffc107;
+
+    font-size: 20px;
+
+}
+
+
+.event-info-header h3 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+}
+
+
+/* Information item */
+
+.event-info-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    padding: 21px 25px;
+
+    border-bottom: 1px solid #edf0f2;
+
+}
+
+
+.event-info-item:last-child {
+
+    border-bottom: 0;
+
+}
+
+
+.event-info-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eaf6ef;
+
+    color: #198754;
+
+    border-radius: 10px;
+
+}
+
+
+.event-info-item span {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #8a94a6;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.event-info-item strong {
+
+    display: block;
+
+    color: #263b52;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+.event-info-item strong small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #667085;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+}
+
+
+/* Status */
+
+.status-upcoming {
+
+    color: #198754 !important;
+
+}
+
+
+.status-past {
+
+    color: #6c757d !important;
+
+}
+
+
+/* ==========================================================
+   COMMUNITY CARD
+========================================================== */
+
+.event-community-card {
+
+    position: relative;
+
+    margin-top: 25px;
+
+    padding: 32px 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #263b52,
+            #1c2e41
+        );
+
+    color: #ffffff;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+}
+
+
+.event-community-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 140px;
+
+    height: 140px;
+
+    right: -55px;
+
+    top: -55px;
+
+    border: 25px solid rgba(255,193,7,0.12);
+
+    border-radius: 50%;
+
+}
+
+
+.community-card-icon {
+
+    width: 55px;
+
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    background: rgba(25,135,84,0.3);
+
+    color: #ffc107;
+
+    border-radius: 50%;
+
+    font-size: 21px;
+
+}
+
+
+.event-community-card h3 {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-bottom: 12px;
+
+    color: #ffffff;
+
+    font-size: 22px;
+
+    font-weight: 750;
+
+}
+
+
+.event-community-card p {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-bottom: 22px;
+
+    color: rgba(255,255,255,0.72);
+
+    font-size: 14px;
+
+    line-height: 1.75;
+
+}
+
+
+.community-btn {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 11px 20px;
+
+    background: #ffc107;
+
+    color: #212529;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.3s ease;
+
+}
+
+
+.community-btn:hover {
+
+    background: #ffffff;
+
+    color: #198754;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 991px) {
+
+    .event-detail-hero {
+
+        padding: 60px 0;
+
+    }
+
+
+    .event-detail-section {
+
+        padding: 60px 0;
+
+    }
+
+
+    .event-main-image {
+
+        max-height: 500px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 767px) {
+
+    .event-detail-hero {
+
+        padding: 50px 0;
+
+    }
+
+
+    .event-detail-title {
+
+        font-size: 2.4rem;
+
+    }
+
+
+    .event-detail-section {
+
+        padding: 45px 0;
+
+    }
+
+
+    .event-main-image {
+
+        min-height: 280px;
+
+        max-height: 400px;
+
+    }
+
+
+    .event-description-card {
+
+        padding: 25px 20px;
+
+    }
+
+
+    .event-section-heading h2 {
+
+        font-size: 23px;
+
+    }
+
+
+    .event-registration-card {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .registration-action {
+
+        width: 100%;
+
+    }
+
+
+    .event-register-btn {
+
+        justify-content: center;
+
+        width: 100%;
+
+    }
+
+
+    .event-info-item {
+
+        padding: 18px 20px;
+
+    }
+
+
+    .event-community-card {
+
+        padding: 27px 22px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+
+    .event-detail-title {
+
+        font-size: 2rem;
+
+    }
+
+
+    .event-breadcrumb {
+
+        font-size: 12px;
+
+        gap: 8px;
+
+    }
+
+
+    .event-image-placeholder {
+
+        min-height: 300px;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

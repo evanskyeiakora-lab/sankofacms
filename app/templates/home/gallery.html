@@ -1,0 +1,771 @@
+<!-- =========================================================
+     HOME GALLERY SECTION
+========================================================= -->
+
+<section class="home-gallery-section">
+
+    <div class="container">
+
+        <!-- =================================================
+             SECTION HEADER
+        ================================================== -->
+
+        <div
+            class="home-gallery-heading"
+            data-aos="fade-up"
+        >
+
+            <div class="home-gallery-label">
+
+                <i class="fas fa-camera"></i>
+
+                GALLERY
+
+            </div>
+
+            <h2>
+                Moments From Our Activities
+            </h2>
+
+            <p>
+                Explore memorable moments from our programmes,
+                community engagements, conferences and outreach activities.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             GALLERY
+        ================================================== -->
+
+        {% if featured_gallery %}
+
+        <div class="row g-4">
+
+            {% for item in featured_gallery %}
+
+            <div
+                class="col-lg-4 col-md-6"
+                data-aos="fade-up"
+                data-aos-delay="{{ loop.index0 * 80 }}"
+            >
+
+                <article class="home-gallery-card">
+
+                    <!-- IMAGE -->
+
+                    <div class="home-gallery-image-wrapper">
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename=item.image_url
+                            ) }}"
+                            alt="{{ item.title }}"
+                            class="home-gallery-image"
+                            loading="lazy"
+                        >
+
+
+                        <!-- CATEGORY -->
+
+                        <span class="home-gallery-category">
+
+                            <i class="fas fa-folder"></i>
+
+                            {{ item.category }}
+
+                        </span>
+
+
+                        <!-- FEATURED -->
+
+                        {% if item.is_featured %}
+
+                        <span class="home-gallery-featured">
+
+                            <i class="fas fa-star"></i>
+
+                            Featured
+
+                        </span>
+
+                        {% endif %}
+
+
+                        <!-- OVERLAY -->
+
+                        <a
+                            href="{{ url_for(
+                                'main.gallery_detail',
+                                slug=item.slug
+                            ) }}"
+                            class="home-gallery-overlay"
+                        >
+
+                            <span class="home-gallery-view">
+
+                                <i class="fas fa-expand"></i>
+
+                            </span>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- CONTENT -->
+
+                    <div class="home-gallery-content">
+
+                        <h3>
+
+                            <a
+                                href="{{ url_for(
+                                    'main.gallery_detail',
+                                    slug=item.slug
+                                ) }}"
+                            >
+
+                                {{ item.title }}
+
+                            </a>
+
+                        </h3>
+
+
+                        {% if item.description %}
+
+                        <p>
+
+                            {{ item.description[:100] }}
+
+                            {% if item.description|length > 100 %}
+                                ...
+                            {% endif %}
+
+                        </p>
+
+                        {% else %}
+
+                        <p>
+
+                            A memorable moment from
+                            Apex Citizens of Ghana.
+
+                        </p>
+
+                        {% endif %}
+
+
+                        <a
+                            href="{{ url_for(
+                                'main.gallery_detail',
+                                slug=item.slug
+                            ) }}"
+                            class="home-gallery-link"
+                        >
+
+                            View Moment
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- =================================================
+             VIEW ALL
+        ================================================== -->
+
+        <div
+            class="text-center mt-5"
+            data-aos="fade-up"
+        >
+
+            <a
+                href="{{ url_for('main.gallery') }}"
+                class="home-gallery-button"
+            >
+
+                View Full Gallery
+
+                <i class="fas fa-images ms-2"></i>
+
+            </a>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
+        <div class="home-gallery-empty">
+
+            <div class="home-gallery-empty-icon">
+
+                <i class="fas fa-images"></i>
+
+            </div>
+
+            <h3>
+                No Gallery Images Yet
+            </h3>
+
+            <p>
+                Gallery images will appear here once they are
+                published from the administration panel.
+            </p>
+
+            <a
+                href="{{ url_for('main.gallery') }}"
+                class="home-gallery-button"
+            >
+
+                Visit Gallery
+
+                <i class="fas fa-arrow-right ms-2"></i>
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CSS
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.home-gallery-section {
+
+    padding: 90px 0;
+
+    background: #f7f9fb;
+
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.home-gallery-heading {
+
+    max-width: 800px;
+
+    margin: 0 auto 45px;
+
+    text-align: center;
+
+}
+
+
+.home-gallery-label {
+
+    margin-bottom: 12px;
+
+    color: #fdbb00;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.home-gallery-label i {
+
+    margin-right: 6px;
+
+}
+
+
+.home-gallery-heading h2 {
+
+    margin: 0 0 15px;
+
+    color: #263b52;
+
+    font-size: clamp(
+        2.2rem,
+        4vw,
+        3.4rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+}
+
+
+.home-gallery-heading p {
+
+    margin: 0;
+
+    color: #667085;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.home-gallery-card {
+
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e9ed;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, .06);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+
+}
+
+
+.home-gallery-card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, .11);
+
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.home-gallery-image-wrapper {
+
+    position: relative;
+
+    height: 270px;
+
+    overflow: hidden;
+
+    background: #edf1f3;
+
+}
+
+
+.home-gallery-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform .5s ease;
+
+}
+
+
+.home-gallery-card:hover
+.home-gallery-image {
+
+    transform: scale(1.06);
+
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.home-gallery-category {
+
+    position: absolute;
+
+    top: 15px;
+
+    left: 15px;
+
+    z-index: 3;
+
+    padding: 7px 10px;
+
+    background: #ffffff;
+
+    color: #198754;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+}
+
+
+.home-gallery-category i {
+
+    margin-right: 4px;
+
+}
+
+
+/* =========================================================
+   FEATURED
+========================================================= */
+
+.home-gallery-featured {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    z-index: 3;
+
+    padding: 7px 10px;
+
+    background: #ffc107;
+
+    color: #212529;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.home-gallery-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(13, 107, 69, .75);
+
+    opacity: 0;
+
+    text-decoration: none;
+
+    transition:
+        opacity .3s ease;
+
+}
+
+
+.home-gallery-card:hover
+.home-gallery-overlay {
+
+    opacity: 1;
+
+}
+
+
+.home-gallery-view {
+
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #ffffff;
+
+    border: 2px solid #ffffff;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.home-gallery-content {
+
+    padding: 22px;
+
+}
+
+
+.home-gallery-content h3 {
+
+    margin: 0 0 10px;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+}
+
+
+.home-gallery-content h3 a {
+
+    color: #263b52;
+
+    text-decoration: none;
+
+}
+
+
+.home-gallery-content h3 a:hover {
+
+    color: #198754;
+
+}
+
+
+.home-gallery-content p {
+
+    margin: 0 0 17px;
+
+    color: #667085;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   LINK
+========================================================= */
+
+.home-gallery-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #198754;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+.home-gallery-link:hover {
+
+    color: #146c43;
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.home-gallery-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 13px 24px;
+
+    background: #198754;
+
+    color: #ffffff;
+
+    border: 2px solid #198754;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: all .3s ease;
+
+}
+
+
+.home-gallery-button:hover {
+
+    background: #146c43;
+
+    border-color: #146c43;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(25, 135, 84, .2);
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.home-gallery-empty {
+
+    padding: 70px 20px;
+
+    text-align: center;
+
+}
+
+
+.home-gallery-empty-icon {
+
+    width: 75px;
+
+    height: 75px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eaf6ef;
+
+    color: #198754;
+
+    border-radius: 50%;
+
+    font-size: 30px;
+
+}
+
+
+.home-gallery-empty h3 {
+
+    margin-bottom: 10px;
+
+    color: #263b52;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+}
+
+
+.home-gallery-empty p {
+
+    max-width: 600px;
+
+    margin: 0 auto 25px;
+
+    color: #667085;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .home-gallery-section {
+
+        padding: 60px 0;
+
+    }
+
+
+    .home-gallery-heading h2 {
+
+        font-size: 32px;
+
+    }
+
+
+    .home-gallery-heading p {
+
+        font-size: 15px;
+
+    }
+
+
+    .home-gallery-image-wrapper {
+
+        height: 250px;
+
+    }
+
+}
+
+</style>
